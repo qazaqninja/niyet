@@ -62,27 +62,21 @@ class _AllReflectedView extends StatelessWidget {
               color: colorScheme.primary,
             ),
             const SizedBox(height: 24),
-            Builder(
-              builder: (context) => Text(
-                context.loc.allIntentionsReflected,
-                style: textTheme.headlineSmall,
-                textAlign: TextAlign.center,
-              ),
+            Text(
+              context.loc.allIntentionsReflected,
+              style: textTheme.headlineSmall,
+              textAlign: TextAlign.center,
             ),
             const SizedBox(height: 12),
-            Builder(
-              builder: (context) => Text(
-                context.loc.mayAllahAccept,
-                style: textTheme.bodyMedium,
-                textAlign: TextAlign.center,
-              ),
+            Text(
+              context.loc.mayAllahAccept,
+              style: textTheme.bodyMedium,
+              textAlign: TextAlign.center,
             ),
             const SizedBox(height: 32),
-            Builder(
-              builder: (context) => ElevatedButton(
-                onPressed: onDone,
-                child: Text(context.loc.complete),
-              ),
+            ElevatedButton(
+              onPressed: onDone,
+              child: Text(context.loc.complete),
             ),
           ],
         ),
