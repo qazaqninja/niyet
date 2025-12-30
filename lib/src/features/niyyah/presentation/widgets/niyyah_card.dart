@@ -6,11 +6,7 @@ import '../../domain/entities/niyyah_category.dart';
 import '../../domain/entities/niyyah_outcome.dart';
 
 class NiyyahCard extends StatelessWidget {
-  const NiyyahCard({
-    required this.niyyah,
-    this.onTap,
-    super.key,
-  });
+  const NiyyahCard({required this.niyyah, this.onTap, super.key});
 
   final Niyyah niyyah;
   final VoidCallback? onTap;
@@ -43,17 +39,14 @@ class NiyyahCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 12),
-              Text(
-                niyyah.text,
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
+              Text(niyyah.text, style: Theme.of(context).textTheme.bodyLarge),
               if (niyyah.reflection != null) ...[
                 const SizedBox(height: 8),
                 Text(
                   niyyah.reflection!,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontStyle: FontStyle.italic,
-                      ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodySmall?.copyWith(fontStyle: FontStyle.italic),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -69,22 +62,20 @@ class NiyyahCard extends StatelessWidget {
 class _CategoryChip extends StatelessWidget {
   const _CategoryChip({required this.category});
 
-  final dynamic category;
+  final NiyyahCategory category;
 
   Color get _color {
-    switch (category.index) {
-      case 0:
+    switch (category) {
+      case NiyyahCategory.ibadah:
         return AppColors.ibadah;
-      case 1:
+      case NiyyahCategory.akhlaq:
         return AppColors.akhlaq;
-      case 2:
+      case NiyyahCategory.family:
         return AppColors.family;
-      case 3:
+      case NiyyahCategory.charity:
         return AppColors.charity;
-      case 4:
+      case NiyyahCategory.work:
         return AppColors.work;
-      default:
-        return AppColors.primary;
     }
   }
 
@@ -99,9 +90,9 @@ class _CategoryChip extends StatelessWidget {
       child: Text(
         category.label,
         style: Theme.of(context).textTheme.labelSmall?.copyWith(
-              color: _color,
-              fontWeight: FontWeight.w600,
-            ),
+          color: _color,
+          fontWeight: FontWeight.w600,
+        ),
       ),
     );
   }

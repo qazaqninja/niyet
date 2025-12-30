@@ -94,12 +94,20 @@ class _ReflectionFlow extends StatefulWidget {
 }
 
 class _ReflectionFlowState extends State<_ReflectionFlow> {
-  int _currentIndex = 0;
+  late int _totalCount;
+  int _completedCount = 0;
   NiyyahOutcome? _selectedOutcome;
   final _reflectionController = TextEditingController();
 
-  Niyyah get _currentNiyyah => widget.niyyat[_currentIndex];
-  bool get _isLast => _currentIndex >= widget.niyyat.length - 1;
+  @override
+  void initState() {
+    super.initState();
+    _totalCount = widget.niyyat.length;
+  }
+
+  Niyyah? get _currentNiyyah =>
+      widget.niyyat.isNotEmpty ? widget.niyyat.first : null;
+  bool get _isLast => widget.niyyat.length <= 1;
 
   @override
   void dispose() {
@@ -108,11 +116,14 @@ class _ReflectionFlowState extends State<_ReflectionFlow> {
   }
 
   void _saveAndNext() {
-    if (_selectedOutcome == null) return;
+    final current = _currentNiyyah;
+    if (_selectedOutcome == null || current == null) return;
+
+    final isLast = _isLast;
 
     context.read<NiyyahBloc>().add(
           NiyyahOutcomeUpdated(
-            id: _currentNiyyah.id,
+            id: current.id,
             outcome: _selectedOutcome!,
             reflection: _reflectionController.text.trim().isEmpty
                 ? null
@@ -120,11 +131,13 @@ class _ReflectionFlowState extends State<_ReflectionFlow> {
           ),
         );
 
-    if (_isLast) {
+    if (isLast) {
       widget.onComplete();
     } else {
+      // Don't increment index - the list will shrink when this item
+      // becomes reflected, so the next item slides into current position
       setState(() {
-        _currentIndex++;
+        _completedCount++;
         _selectedOutcome = null;
         _reflectionController.clear();
       });
@@ -133,6 +146,11 @@ class _ReflectionFlowState extends State<_ReflectionFlow> {
 
   @override
   Widget build(BuildContext context) {
+    final current = _currentNiyyah;
+    if (current == null) {
+      return const SizedBox.shrink();
+    }
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -140,13 +158,13 @@ class _ReflectionFlowState extends State<_ReflectionFlow> {
         children: [
           // Progress indicator
           LinearProgressIndicator(
-            value: (_currentIndex + 1) / widget.niyyat.length,
+            value: (_completedCount + 1) / _totalCount,
             backgroundColor:
                 Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
           ),
           const SizedBox(height: 8),
           Text(
-            '${_currentIndex + 1} of ${widget.niyyat.length}',
+            '${_completedCount + 1} of $_totalCount',
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: 32),
@@ -159,14 +177,14 @@ class _ReflectionFlowState extends State<_ReflectionFlow> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    _currentNiyyah.category.label,
+                    current.category.label,
                     style: Theme.of(context).textTheme.labelMedium?.copyWith(
                           color: Theme.of(context).colorScheme.primary,
                         ),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    _currentNiyyah.text,
+                    current.text,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ],
