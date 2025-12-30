@@ -1,0 +1,97 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for English (`en`).
+class AppLocalizationsEn extends AppLocalizations {
+  AppLocalizationsEn([String locale = 'en']) : super(locale);
+
+  @override
+  String get appTitle => 'Niyyah';
+
+  @override
+  String get home => 'Home';
+
+  @override
+  String get calendar => 'Calendar';
+
+  @override
+  String get settings => 'Settings';
+
+  @override
+  String get setNiyyah => 'Set Intention';
+
+  @override
+  String get muhasaba => 'Reflection';
+
+  @override
+  String get morningGreeting => 'Good morning';
+
+  @override
+  String get eveningGreeting => 'Good evening';
+
+  @override
+  String get whatIsYourIntention => 'What is your intention today?';
+
+  @override
+  String get intentionPlaceholder => 'e.g., Be patient with family';
+
+  @override
+  String get forTheSakeOfAllah => 'For the sake of Allah';
+
+  @override
+  String get category => 'Category';
+
+  @override
+  String get ibadah => 'Worship';
+
+  @override
+  String get akhlaq => 'Character';
+
+  @override
+  String get family => 'Family';
+
+  @override
+  String get charity => 'Charity';
+
+  @override
+  String get work => 'Work';
+
+  @override
+  String get fulfilled => 'Fulfilled';
+
+  @override
+  String get tried => 'Tried';
+
+  @override
+  String get missed => 'Missed';
+
+  @override
+  String get reflection => 'Reflection';
+
+  @override
+  String get reflectionPlaceholder => 'What helped? What distracted?';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get noIntentionsYet => 'No intentions set yet';
+
+  @override
+  String get setYourFirstIntention => 'Set your first intention for today';
+
+  @override
+  String get todayIntentions => 'Today\'s Intentions';
+
+  @override
+  String get ramadanMode => 'Ramadan Mode';
+
+  @override
+  String get hadithReminder => 'Actions are judged by intentions';
+}
