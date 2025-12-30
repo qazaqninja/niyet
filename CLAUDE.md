@@ -127,6 +127,7 @@ Earth-toned, minimalist design:
 
 ### Git & PRs
 - **NO** "Generated with Claude Code" footer in commits or PRs
+- **NO** "Co-Authored-By: Claude" lines in commits
 - **NO** emojis in commits/PRs unless user requests
 - PR workflow: create PR -> review -> fix issues -> merge when user approves
 - Use `superpowers:code-reviewer` for reviews before merging
