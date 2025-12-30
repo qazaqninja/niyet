@@ -8,6 +8,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Tagline:** "Intentions before actions"
 - **Core philosophy:** Track what you intended, not just what you did. Reflection matters more than completion.
 
+## Terminology
+
+- **niyet** (singular) - intention
+- **niyetler** (plural) - intentions
+- Use Turkish/Kazakh terminology, NOT Arabic (niyyah/niyyat)
+
 ## Architecture
 
 Clean Architecture with BLoC state management pattern:
@@ -23,7 +29,7 @@ lib/src/
 │   ├── services/           # Injectable DI setup
 │   └── theme/              # Earth-toned theme
 └── features/               # Feature modules
-    ├── niyyah/             # Core intention feature
+    ├── niyet/              # Core intention feature
     ├── calendar/           # Calendar view
     ├── home/               # Home screen
     └── settings/           # App settings
@@ -73,8 +79,10 @@ flutter test
 
 ### Database (Drift)
 - Local SQLite via Drift ORM
-- Table: `Niyyat` (plural of niyyah)
+- Table: `Niyetler` (plural of niyet)
 - Streams for reactive UI updates
+- Schema version: 2 (migrated from `niyyat` to `niyetler`)
+- Use `DROP TABLE IF EXISTS` for safe migrations
 
 ### Result Type
 ```dart
@@ -88,12 +96,12 @@ sealed class Result<T> with _$Result<T> {
 ## Data Model
 
 ```dart
-class Niyyah {
+class Niyet {
   final String id;
   final DateTime date;
   final String text;
-  final NiyyahCategory category;  // ibadah, akhlaq, family, charity, work
-  final NiyyahOutcome? outcome;   // fulfilled, tried, missed
+  final NiyetCategory category;  // ibadah, akhlaq, family, charity, work
+  final NiyetOutcome? outcome;   // fulfilled, tried, missed
   final String? reflection;
   final bool forAllah;
   final DateTime createdAt;
@@ -114,3 +122,37 @@ Earth-toned, minimalist design:
 - Secondary: Warm Sand (#D4B896)
 - Accent: Soft Gold (#D4A574)
 - No gamification elements
+
+## Workflow Rules
+
+### Git & PRs
+- **NO** "Generated with Claude Code" footer in commits or PRs
+- **NO** emojis in commits/PRs unless user requests
+- PR workflow: create PR -> review -> fix issues -> merge when user approves
+- Use `superpowers:code-reviewer` for reviews before merging
+
+### Code Review Process
+1. Create feature branch
+2. Push and create PR
+3. Run code review via subagent
+4. Fix any Critical/Important issues
+5. Wait for user approval
+6. Merge to main
+
+## Performance Patterns
+
+### BLoC State
+- Cache computed properties in state constructor
+- Avoid recalculating `.where()` on every access
+```dart
+NiyetState({...})
+  : reflectedCount = niyetler.where((n) => n.isReflected).length,
+    unreflectedCount = niyetler.where((n) => !n.isReflected).length;
+```
+
+### Theme Lookups
+- Cache `Theme.of(context)` at start of build method
+- Avoid repeated lookups in widget tree
+
+### Keyboard Dismiss
+- Wrap Scaffold in GestureDetector with `FocusScope.of(context).unfocus()`
