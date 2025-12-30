@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/colors.dart';
-import '../../domain/entities/niyyah_category.dart';
+import '../../domain/entities/niyet_category.dart';
 
 class CategorySelector extends StatelessWidget {
   const CategorySelector({
@@ -10,15 +10,15 @@ class CategorySelector extends StatelessWidget {
     super.key,
   });
 
-  final NiyyahCategory selected;
-  final ValueChanged<NiyyahCategory> onSelected;
+  final NiyetCategory selected;
+  final ValueChanged<NiyetCategory> onSelected;
 
   @override
   Widget build(BuildContext context) {
     return Wrap(
       spacing: 8,
       runSpacing: 8,
-      children: NiyyahCategory.values.map((category) {
+      children: NiyetCategory.values.map((category) {
         final isSelected = category == selected;
         return _CategoryChip(
           category: category,
@@ -37,21 +37,21 @@ class _CategoryChip extends StatelessWidget {
     required this.onTap,
   });
 
-  final NiyyahCategory category;
+  final NiyetCategory category;
   final bool isSelected;
   final VoidCallback onTap;
 
   Color get _color {
     switch (category) {
-      case NiyyahCategory.ibadah:
+      case NiyetCategory.ibadah:
         return AppColors.ibadah;
-      case NiyyahCategory.akhlaq:
+      case NiyetCategory.akhlaq:
         return AppColors.akhlaq;
-      case NiyyahCategory.family:
+      case NiyetCategory.family:
         return AppColors.family;
-      case NiyyahCategory.charity:
+      case NiyetCategory.charity:
         return AppColors.charity;
-      case NiyyahCategory.work:
+      case NiyetCategory.work:
         return AppColors.work;
     }
   }

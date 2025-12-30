@@ -7,11 +7,11 @@ import 'package:path_provider/path_provider.dart';
 
 part 'app_database.g.dart';
 
-/// Niyyat table (plural of niyyah in Arabic)
-class Niyyat extends Table {
+/// Niyetler table (plural of niyet in Arabic)
+class Niyetler extends Table {
   TextColumn get id => text()();
   DateTimeColumn get date => dateTime()();
-  TextColumn get niyyahText => text()();
+  TextColumn get niyetText => text()();
   IntColumn get category => integer()();
   IntColumn get outcome => integer().nullable()();
   TextColumn get reflection => text().nullable()();
@@ -23,7 +23,7 @@ class Niyyat extends Table {
   Set<Column> get primaryKey => {id};
 }
 
-@DriftDatabase(tables: [Niyyat])
+@DriftDatabase(tables: [Niyetler])
 class AppDatabase extends _$AppDatabase {
   AppDatabase._() : super(_openConnection());
 
@@ -41,40 +41,40 @@ class AppDatabase extends _$AppDatabase {
   @override
   int get schemaVersion => 1;
 
-  // Niyyah CRUD operations
-  Future<List<NiyyatData>> getNiyyatByDate(DateTime date) async {
+  // Niyet CRUD operations
+  Future<List<NiyetlerData>> getNiyetlerByDate(DateTime date) async {
     final startOfDay = DateTime(date.year, date.month, date.day);
     final endOfDay = startOfDay.add(const Duration(days: 1));
-    return (select(niyyat)
+    return (select(niyetler)
           ..where((t) =>
               t.date.isBiggerOrEqualValue(startOfDay) &
               t.date.isSmallerThanValue(endOfDay)))
         .get();
   }
 
-  Future<List<NiyyatData>> getTodayNiyyat() => getNiyyatByDate(DateTime.now());
+  Future<List<NiyetlerData>> getTodayNiyetler() => getNiyetlerByDate(DateTime.now());
 
-  Future<int> insertNiyyah(NiyyatCompanion entry) => into(niyyat).insert(entry);
+  Future<int> insertNiyet(NiyetlerCompanion entry) => into(niyetler).insert(entry);
 
-  Future<bool> updateNiyyah(NiyyatCompanion entry) =>
-      update(niyyat).replace(entry);
+  Future<bool> updateNiyet(NiyetlerCompanion entry) =>
+      update(niyetler).replace(entry);
 
-  Future<int> deleteNiyyah(String id) =>
-      (delete(niyyat)..where((t) => t.id.equals(id))).go();
+  Future<int> deleteNiyet(String id) =>
+      (delete(niyetler)..where((t) => t.id.equals(id))).go();
 
-  Future<List<NiyyatData>> getNiyyatInRange(DateTime start, DateTime end) {
-    return (select(niyyat)
+  Future<List<NiyetlerData>> getNiyetlerInRange(DateTime start, DateTime end) {
+    return (select(niyetler)
           ..where((t) =>
               t.date.isBiggerOrEqualValue(start) &
               t.date.isSmallerThanValue(end)))
         .get();
   }
 
-  Stream<List<NiyyatData>> watchTodayNiyyat() {
+  Stream<List<NiyetlerData>> watchTodayNiyetler() {
     final now = DateTime.now();
     final startOfDay = DateTime(now.year, now.month, now.day);
     final endOfDay = startOfDay.add(const Duration(days: 1));
-    return (select(niyyat)
+    return (select(niyetler)
           ..where((t) =>
               t.date.isBiggerOrEqualValue(startOfDay) &
               t.date.isSmallerThanValue(endOfDay)))

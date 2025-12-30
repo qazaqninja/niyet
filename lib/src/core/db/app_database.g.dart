@@ -3,11 +3,12 @@
 part of 'app_database.dart';
 
 // ignore_for_file: type=lint
-class $NiyyatTable extends Niyyat with TableInfo<$NiyyatTable, NiyyatData> {
+class $NiyetlerTable extends Niyetler
+    with TableInfo<$NiyetlerTable, NiyetlerData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $NiyyatTable(this.attachedDatabase, [this._alias]);
+  $NiyetlerTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<String> id = GeneratedColumn<String>(
@@ -26,12 +27,12 @@ class $NiyyatTable extends Niyyat with TableInfo<$NiyyatTable, NiyyatData> {
     type: DriftSqlType.dateTime,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _niyyahTextMeta = const VerificationMeta(
-    'niyyahText',
+  static const VerificationMeta _niyetTextMeta = const VerificationMeta(
+    'niyetText',
   );
   @override
-  late final GeneratedColumn<String> niyyahText = GeneratedColumn<String>(
-    'niyyah_text',
+  late final GeneratedColumn<String> niyetText = GeneratedColumn<String>(
+    'niyet_text',
     aliasedName,
     false,
     type: DriftSqlType.string,
@@ -111,7 +112,7 @@ class $NiyyatTable extends Niyyat with TableInfo<$NiyyatTable, NiyyatData> {
   List<GeneratedColumn> get $columns => [
     id,
     date,
-    niyyahText,
+    niyetText,
     category,
     outcome,
     reflection,
@@ -123,10 +124,10 @@ class $NiyyatTable extends Niyyat with TableInfo<$NiyyatTable, NiyyatData> {
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'niyyat';
+  static const String $name = 'niyetler';
   @override
   VerificationContext validateIntegrity(
-    Insertable<NiyyatData> instance, {
+    Insertable<NiyetlerData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -144,13 +145,13 @@ class $NiyyatTable extends Niyyat with TableInfo<$NiyyatTable, NiyyatData> {
     } else if (isInserting) {
       context.missing(_dateMeta);
     }
-    if (data.containsKey('niyyah_text')) {
+    if (data.containsKey('niyet_text')) {
       context.handle(
-        _niyyahTextMeta,
-        niyyahText.isAcceptableOrUnknown(data['niyyah_text']!, _niyyahTextMeta),
+        _niyetTextMeta,
+        niyetText.isAcceptableOrUnknown(data['niyet_text']!, _niyetTextMeta),
       );
     } else if (isInserting) {
-      context.missing(_niyyahTextMeta);
+      context.missing(_niyetTextMeta);
     }
     if (data.containsKey('category')) {
       context.handle(
@@ -198,9 +199,9 @@ class $NiyyatTable extends Niyyat with TableInfo<$NiyyatTable, NiyyatData> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  NiyyatData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  NiyetlerData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return NiyyatData(
+    return NiyetlerData(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}id'],
@@ -209,9 +210,9 @@ class $NiyyatTable extends Niyyat with TableInfo<$NiyyatTable, NiyyatData> {
         DriftSqlType.dateTime,
         data['${effectivePrefix}date'],
       )!,
-      niyyahText: attachedDatabase.typeMapping.read(
+      niyetText: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}niyyah_text'],
+        data['${effectivePrefix}niyet_text'],
       )!,
       category: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
@@ -241,25 +242,25 @@ class $NiyyatTable extends Niyyat with TableInfo<$NiyyatTable, NiyyatData> {
   }
 
   @override
-  $NiyyatTable createAlias(String alias) {
-    return $NiyyatTable(attachedDatabase, alias);
+  $NiyetlerTable createAlias(String alias) {
+    return $NiyetlerTable(attachedDatabase, alias);
   }
 }
 
-class NiyyatData extends DataClass implements Insertable<NiyyatData> {
+class NiyetlerData extends DataClass implements Insertable<NiyetlerData> {
   final String id;
   final DateTime date;
-  final String niyyahText;
+  final String niyetText;
   final int category;
   final int? outcome;
   final String? reflection;
   final bool forAllah;
   final DateTime createdAt;
   final DateTime? updatedAt;
-  const NiyyatData({
+  const NiyetlerData({
     required this.id,
     required this.date,
-    required this.niyyahText,
+    required this.niyetText,
     required this.category,
     this.outcome,
     this.reflection,
@@ -272,7 +273,7 @@ class NiyyatData extends DataClass implements Insertable<NiyyatData> {
     final map = <String, Expression>{};
     map['id'] = Variable<String>(id);
     map['date'] = Variable<DateTime>(date);
-    map['niyyah_text'] = Variable<String>(niyyahText);
+    map['niyet_text'] = Variable<String>(niyetText);
     map['category'] = Variable<int>(category);
     if (!nullToAbsent || outcome != null) {
       map['outcome'] = Variable<int>(outcome);
@@ -288,11 +289,11 @@ class NiyyatData extends DataClass implements Insertable<NiyyatData> {
     return map;
   }
 
-  NiyyatCompanion toCompanion(bool nullToAbsent) {
-    return NiyyatCompanion(
+  NiyetlerCompanion toCompanion(bool nullToAbsent) {
+    return NiyetlerCompanion(
       id: Value(id),
       date: Value(date),
-      niyyahText: Value(niyyahText),
+      niyetText: Value(niyetText),
       category: Value(category),
       outcome: outcome == null && nullToAbsent
           ? const Value.absent()
@@ -308,15 +309,15 @@ class NiyyatData extends DataClass implements Insertable<NiyyatData> {
     );
   }
 
-  factory NiyyatData.fromJson(
+  factory NiyetlerData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return NiyyatData(
+    return NiyetlerData(
       id: serializer.fromJson<String>(json['id']),
       date: serializer.fromJson<DateTime>(json['date']),
-      niyyahText: serializer.fromJson<String>(json['niyyahText']),
+      niyetText: serializer.fromJson<String>(json['niyetText']),
       category: serializer.fromJson<int>(json['category']),
       outcome: serializer.fromJson<int?>(json['outcome']),
       reflection: serializer.fromJson<String?>(json['reflection']),
@@ -331,7 +332,7 @@ class NiyyatData extends DataClass implements Insertable<NiyyatData> {
     return <String, dynamic>{
       'id': serializer.toJson<String>(id),
       'date': serializer.toJson<DateTime>(date),
-      'niyyahText': serializer.toJson<String>(niyyahText),
+      'niyetText': serializer.toJson<String>(niyetText),
       'category': serializer.toJson<int>(category),
       'outcome': serializer.toJson<int?>(outcome),
       'reflection': serializer.toJson<String?>(reflection),
@@ -341,20 +342,20 @@ class NiyyatData extends DataClass implements Insertable<NiyyatData> {
     };
   }
 
-  NiyyatData copyWith({
+  NiyetlerData copyWith({
     String? id,
     DateTime? date,
-    String? niyyahText,
+    String? niyetText,
     int? category,
     Value<int?> outcome = const Value.absent(),
     Value<String?> reflection = const Value.absent(),
     bool? forAllah,
     DateTime? createdAt,
     Value<DateTime?> updatedAt = const Value.absent(),
-  }) => NiyyatData(
+  }) => NiyetlerData(
     id: id ?? this.id,
     date: date ?? this.date,
-    niyyahText: niyyahText ?? this.niyyahText,
+    niyetText: niyetText ?? this.niyetText,
     category: category ?? this.category,
     outcome: outcome.present ? outcome.value : this.outcome,
     reflection: reflection.present ? reflection.value : this.reflection,
@@ -362,13 +363,11 @@ class NiyyatData extends DataClass implements Insertable<NiyyatData> {
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt.present ? updatedAt.value : this.updatedAt,
   );
-  NiyyatData copyWithCompanion(NiyyatCompanion data) {
-    return NiyyatData(
+  NiyetlerData copyWithCompanion(NiyetlerCompanion data) {
+    return NiyetlerData(
       id: data.id.present ? data.id.value : this.id,
       date: data.date.present ? data.date.value : this.date,
-      niyyahText: data.niyyahText.present
-          ? data.niyyahText.value
-          : this.niyyahText,
+      niyetText: data.niyetText.present ? data.niyetText.value : this.niyetText,
       category: data.category.present ? data.category.value : this.category,
       outcome: data.outcome.present ? data.outcome.value : this.outcome,
       reflection: data.reflection.present
@@ -382,10 +381,10 @@ class NiyyatData extends DataClass implements Insertable<NiyyatData> {
 
   @override
   String toString() {
-    return (StringBuffer('NiyyatData(')
+    return (StringBuffer('NiyetlerData(')
           ..write('id: $id, ')
           ..write('date: $date, ')
-          ..write('niyyahText: $niyyahText, ')
+          ..write('niyetText: $niyetText, ')
           ..write('category: $category, ')
           ..write('outcome: $outcome, ')
           ..write('reflection: $reflection, ')
@@ -400,7 +399,7 @@ class NiyyatData extends DataClass implements Insertable<NiyyatData> {
   int get hashCode => Object.hash(
     id,
     date,
-    niyyahText,
+    niyetText,
     category,
     outcome,
     reflection,
@@ -411,10 +410,10 @@ class NiyyatData extends DataClass implements Insertable<NiyyatData> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is NiyyatData &&
+      (other is NiyetlerData &&
           other.id == this.id &&
           other.date == this.date &&
-          other.niyyahText == this.niyyahText &&
+          other.niyetText == this.niyetText &&
           other.category == this.category &&
           other.outcome == this.outcome &&
           other.reflection == this.reflection &&
@@ -423,10 +422,10 @@ class NiyyatData extends DataClass implements Insertable<NiyyatData> {
           other.updatedAt == this.updatedAt);
 }
 
-class NiyyatCompanion extends UpdateCompanion<NiyyatData> {
+class NiyetlerCompanion extends UpdateCompanion<NiyetlerData> {
   final Value<String> id;
   final Value<DateTime> date;
-  final Value<String> niyyahText;
+  final Value<String> niyetText;
   final Value<int> category;
   final Value<int?> outcome;
   final Value<String?> reflection;
@@ -434,10 +433,10 @@ class NiyyatCompanion extends UpdateCompanion<NiyyatData> {
   final Value<DateTime> createdAt;
   final Value<DateTime?> updatedAt;
   final Value<int> rowid;
-  const NiyyatCompanion({
+  const NiyetlerCompanion({
     this.id = const Value.absent(),
     this.date = const Value.absent(),
-    this.niyyahText = const Value.absent(),
+    this.niyetText = const Value.absent(),
     this.category = const Value.absent(),
     this.outcome = const Value.absent(),
     this.reflection = const Value.absent(),
@@ -446,10 +445,10 @@ class NiyyatCompanion extends UpdateCompanion<NiyyatData> {
     this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
-  NiyyatCompanion.insert({
+  NiyetlerCompanion.insert({
     required String id,
     required DateTime date,
-    required String niyyahText,
+    required String niyetText,
     required int category,
     this.outcome = const Value.absent(),
     this.reflection = const Value.absent(),
@@ -459,13 +458,13 @@ class NiyyatCompanion extends UpdateCompanion<NiyyatData> {
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        date = Value(date),
-       niyyahText = Value(niyyahText),
+       niyetText = Value(niyetText),
        category = Value(category),
        createdAt = Value(createdAt);
-  static Insertable<NiyyatData> custom({
+  static Insertable<NiyetlerData> custom({
     Expression<String>? id,
     Expression<DateTime>? date,
-    Expression<String>? niyyahText,
+    Expression<String>? niyetText,
     Expression<int>? category,
     Expression<int>? outcome,
     Expression<String>? reflection,
@@ -477,7 +476,7 @@ class NiyyatCompanion extends UpdateCompanion<NiyyatData> {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (date != null) 'date': date,
-      if (niyyahText != null) 'niyyah_text': niyyahText,
+      if (niyetText != null) 'niyet_text': niyetText,
       if (category != null) 'category': category,
       if (outcome != null) 'outcome': outcome,
       if (reflection != null) 'reflection': reflection,
@@ -488,10 +487,10 @@ class NiyyatCompanion extends UpdateCompanion<NiyyatData> {
     });
   }
 
-  NiyyatCompanion copyWith({
+  NiyetlerCompanion copyWith({
     Value<String>? id,
     Value<DateTime>? date,
-    Value<String>? niyyahText,
+    Value<String>? niyetText,
     Value<int>? category,
     Value<int?>? outcome,
     Value<String?>? reflection,
@@ -500,10 +499,10 @@ class NiyyatCompanion extends UpdateCompanion<NiyyatData> {
     Value<DateTime?>? updatedAt,
     Value<int>? rowid,
   }) {
-    return NiyyatCompanion(
+    return NiyetlerCompanion(
       id: id ?? this.id,
       date: date ?? this.date,
-      niyyahText: niyyahText ?? this.niyyahText,
+      niyetText: niyetText ?? this.niyetText,
       category: category ?? this.category,
       outcome: outcome ?? this.outcome,
       reflection: reflection ?? this.reflection,
@@ -523,8 +522,8 @@ class NiyyatCompanion extends UpdateCompanion<NiyyatData> {
     if (date.present) {
       map['date'] = Variable<DateTime>(date.value);
     }
-    if (niyyahText.present) {
-      map['niyyah_text'] = Variable<String>(niyyahText.value);
+    if (niyetText.present) {
+      map['niyet_text'] = Variable<String>(niyetText.value);
     }
     if (category.present) {
       map['category'] = Variable<int>(category.value);
@@ -552,10 +551,10 @@ class NiyyatCompanion extends UpdateCompanion<NiyyatData> {
 
   @override
   String toString() {
-    return (StringBuffer('NiyyatCompanion(')
+    return (StringBuffer('NiyetlerCompanion(')
           ..write('id: $id, ')
           ..write('date: $date, ')
-          ..write('niyyahText: $niyyahText, ')
+          ..write('niyetText: $niyetText, ')
           ..write('category: $category, ')
           ..write('outcome: $outcome, ')
           ..write('reflection: $reflection, ')
@@ -571,19 +570,19 @@ class NiyyatCompanion extends UpdateCompanion<NiyyatData> {
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
-  late final $NiyyatTable niyyat = $NiyyatTable(this);
+  late final $NiyetlerTable niyetler = $NiyetlerTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [niyyat];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [niyetler];
 }
 
-typedef $$NiyyatTableCreateCompanionBuilder =
-    NiyyatCompanion Function({
+typedef $$NiyetlerTableCreateCompanionBuilder =
+    NiyetlerCompanion Function({
       required String id,
       required DateTime date,
-      required String niyyahText,
+      required String niyetText,
       required int category,
       Value<int?> outcome,
       Value<String?> reflection,
@@ -592,11 +591,11 @@ typedef $$NiyyatTableCreateCompanionBuilder =
       Value<DateTime?> updatedAt,
       Value<int> rowid,
     });
-typedef $$NiyyatTableUpdateCompanionBuilder =
-    NiyyatCompanion Function({
+typedef $$NiyetlerTableUpdateCompanionBuilder =
+    NiyetlerCompanion Function({
       Value<String> id,
       Value<DateTime> date,
-      Value<String> niyyahText,
+      Value<String> niyetText,
       Value<int> category,
       Value<int?> outcome,
       Value<String?> reflection,
@@ -606,9 +605,9 @@ typedef $$NiyyatTableUpdateCompanionBuilder =
       Value<int> rowid,
     });
 
-class $$NiyyatTableFilterComposer
-    extends Composer<_$AppDatabase, $NiyyatTable> {
-  $$NiyyatTableFilterComposer({
+class $$NiyetlerTableFilterComposer
+    extends Composer<_$AppDatabase, $NiyetlerTable> {
+  $$NiyetlerTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -625,8 +624,8 @@ class $$NiyyatTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get niyyahText => $composableBuilder(
-    column: $table.niyyahText,
+  ColumnFilters<String> get niyetText => $composableBuilder(
+    column: $table.niyetText,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -661,9 +660,9 @@ class $$NiyyatTableFilterComposer
   );
 }
 
-class $$NiyyatTableOrderingComposer
-    extends Composer<_$AppDatabase, $NiyyatTable> {
-  $$NiyyatTableOrderingComposer({
+class $$NiyetlerTableOrderingComposer
+    extends Composer<_$AppDatabase, $NiyetlerTable> {
+  $$NiyetlerTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -680,8 +679,8 @@ class $$NiyyatTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get niyyahText => $composableBuilder(
-    column: $table.niyyahText,
+  ColumnOrderings<String> get niyetText => $composableBuilder(
+    column: $table.niyetText,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -716,9 +715,9 @@ class $$NiyyatTableOrderingComposer
   );
 }
 
-class $$NiyyatTableAnnotationComposer
-    extends Composer<_$AppDatabase, $NiyyatTable> {
-  $$NiyyatTableAnnotationComposer({
+class $$NiyetlerTableAnnotationComposer
+    extends Composer<_$AppDatabase, $NiyetlerTable> {
+  $$NiyetlerTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -731,10 +730,8 @@ class $$NiyyatTableAnnotationComposer
   GeneratedColumn<DateTime> get date =>
       $composableBuilder(column: $table.date, builder: (column) => column);
 
-  GeneratedColumn<String> get niyyahText => $composableBuilder(
-    column: $table.niyyahText,
-    builder: (column) => column,
-  );
+  GeneratedColumn<String> get niyetText =>
+      $composableBuilder(column: $table.niyetText, builder: (column) => column);
 
   GeneratedColumn<int> get category =>
       $composableBuilder(column: $table.category, builder: (column) => column);
@@ -757,37 +754,40 @@ class $$NiyyatTableAnnotationComposer
       $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 }
 
-class $$NiyyatTableTableManager
+class $$NiyetlerTableTableManager
     extends
         RootTableManager<
           _$AppDatabase,
-          $NiyyatTable,
-          NiyyatData,
-          $$NiyyatTableFilterComposer,
-          $$NiyyatTableOrderingComposer,
-          $$NiyyatTableAnnotationComposer,
-          $$NiyyatTableCreateCompanionBuilder,
-          $$NiyyatTableUpdateCompanionBuilder,
-          (NiyyatData, BaseReferences<_$AppDatabase, $NiyyatTable, NiyyatData>),
-          NiyyatData,
+          $NiyetlerTable,
+          NiyetlerData,
+          $$NiyetlerTableFilterComposer,
+          $$NiyetlerTableOrderingComposer,
+          $$NiyetlerTableAnnotationComposer,
+          $$NiyetlerTableCreateCompanionBuilder,
+          $$NiyetlerTableUpdateCompanionBuilder,
+          (
+            NiyetlerData,
+            BaseReferences<_$AppDatabase, $NiyetlerTable, NiyetlerData>,
+          ),
+          NiyetlerData,
           PrefetchHooks Function()
         > {
-  $$NiyyatTableTableManager(_$AppDatabase db, $NiyyatTable table)
+  $$NiyetlerTableTableManager(_$AppDatabase db, $NiyetlerTable table)
     : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$NiyyatTableFilterComposer($db: db, $table: table),
+              $$NiyetlerTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$NiyyatTableOrderingComposer($db: db, $table: table),
+              $$NiyetlerTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$NiyyatTableAnnotationComposer($db: db, $table: table),
+              $$NiyetlerTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<String> id = const Value.absent(),
                 Value<DateTime> date = const Value.absent(),
-                Value<String> niyyahText = const Value.absent(),
+                Value<String> niyetText = const Value.absent(),
                 Value<int> category = const Value.absent(),
                 Value<int?> outcome = const Value.absent(),
                 Value<String?> reflection = const Value.absent(),
@@ -795,10 +795,10 @@ class $$NiyyatTableTableManager
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime?> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
-              }) => NiyyatCompanion(
+              }) => NiyetlerCompanion(
                 id: id,
                 date: date,
-                niyyahText: niyyahText,
+                niyetText: niyetText,
                 category: category,
                 outcome: outcome,
                 reflection: reflection,
@@ -811,7 +811,7 @@ class $$NiyyatTableTableManager
               ({
                 required String id,
                 required DateTime date,
-                required String niyyahText,
+                required String niyetText,
                 required int category,
                 Value<int?> outcome = const Value.absent(),
                 Value<String?> reflection = const Value.absent(),
@@ -819,10 +819,10 @@ class $$NiyyatTableTableManager
                 required DateTime createdAt,
                 Value<DateTime?> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
-              }) => NiyyatCompanion.insert(
+              }) => NiyetlerCompanion.insert(
                 id: id,
                 date: date,
-                niyyahText: niyyahText,
+                niyetText: niyetText,
                 category: category,
                 outcome: outcome,
                 reflection: reflection,
@@ -839,24 +839,27 @@ class $$NiyyatTableTableManager
       );
 }
 
-typedef $$NiyyatTableProcessedTableManager =
+typedef $$NiyetlerTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
-      $NiyyatTable,
-      NiyyatData,
-      $$NiyyatTableFilterComposer,
-      $$NiyyatTableOrderingComposer,
-      $$NiyyatTableAnnotationComposer,
-      $$NiyyatTableCreateCompanionBuilder,
-      $$NiyyatTableUpdateCompanionBuilder,
-      (NiyyatData, BaseReferences<_$AppDatabase, $NiyyatTable, NiyyatData>),
-      NiyyatData,
+      $NiyetlerTable,
+      NiyetlerData,
+      $$NiyetlerTableFilterComposer,
+      $$NiyetlerTableOrderingComposer,
+      $$NiyetlerTableAnnotationComposer,
+      $$NiyetlerTableCreateCompanionBuilder,
+      $$NiyetlerTableUpdateCompanionBuilder,
+      (
+        NiyetlerData,
+        BaseReferences<_$AppDatabase, $NiyetlerTable, NiyetlerData>,
+      ),
+      NiyetlerData,
       PrefetchHooks Function()
     >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
-  $$NiyyatTableTableManager get niyyat =>
-      $$NiyyatTableTableManager(_db, _db.niyyat);
+  $$NiyetlerTableTableManager get niyetler =>
+      $$NiyetlerTableTableManager(_db, _db.niyetler);
 }

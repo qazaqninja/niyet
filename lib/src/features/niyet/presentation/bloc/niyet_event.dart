@@ -1,48 +1,48 @@
-part of 'niyyah_bloc.dart';
+part of 'niyet_bloc.dart';
 
-abstract class NiyyahEvent extends Equatable {
-  const NiyyahEvent();
+abstract class NiyetEvent extends Equatable {
+  const NiyetEvent();
 
   @override
   List<Object?> get props => [];
 }
 
-class NiyyahLoadRequested extends NiyyahEvent {
-  const NiyyahLoadRequested();
+class NiyetLoadRequested extends NiyetEvent {
+  const NiyetLoadRequested();
 }
 
-class NiyyahCreated extends NiyyahEvent {
-  const NiyyahCreated({
+class NiyetCreated extends NiyetEvent {
+  const NiyetCreated({
     required this.text,
     required this.category,
     this.forAllah = true,
   });
 
   final String text;
-  final NiyyahCategory category;
+  final NiyetCategory category;
   final bool forAllah;
 
   @override
   List<Object?> get props => [text, category, forAllah];
 }
 
-class NiyyahOutcomeUpdated extends NiyyahEvent {
-  const NiyyahOutcomeUpdated({
+class NiyetOutcomeUpdated extends NiyetEvent {
+  const NiyetOutcomeUpdated({
     required this.id,
     required this.outcome,
     this.reflection,
   });
 
   final String id;
-  final NiyyahOutcome outcome;
+  final NiyetOutcome outcome;
   final String? reflection;
 
   @override
   List<Object?> get props => [id, outcome, reflection];
 }
 
-class NiyyahDeleted extends NiyyahEvent {
-  const NiyyahDeleted({required this.id});
+class NiyetDeleted extends NiyetEvent {
+  const NiyetDeleted({required this.id});
 
   final String id;
 

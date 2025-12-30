@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../domain/entities/niyyah_category.dart';
-import '../bloc/niyyah_bloc.dart';
+import '../../domain/entities/niyet_category.dart';
+import '../bloc/niyet_bloc.dart';
 import '../widgets/category_selector.dart';
 
-class SetNiyyahPage extends StatefulWidget {
-  const SetNiyyahPage({super.key});
+class SetNiyetPage extends StatefulWidget {
+  const SetNiyetPage({super.key});
 
   @override
-  State<SetNiyyahPage> createState() => _SetNiyyahPageState();
+  State<SetNiyetPage> createState() => _SetNiyetPageState();
 }
 
-class _SetNiyyahPageState extends State<SetNiyyahPage> {
+class _SetNiyetPageState extends State<SetNiyetPage> {
   final _textController = TextEditingController();
-  NiyyahCategory _selectedCategory = NiyyahCategory.ibadah;
+  NiyetCategory _selectedCategory = NiyetCategory.ibadah;
   bool _forAllah = true;
 
   @override
@@ -27,8 +27,8 @@ class _SetNiyyahPageState extends State<SetNiyyahPage> {
   void _save() {
     if (_textController.text.trim().isEmpty) return;
 
-    context.read<NiyyahBloc>().add(
-          NiyyahCreated(
+    context.read<NiyetBloc>().add(
+          NiyetCreated(
             text: _textController.text.trim(),
             category: _selectedCategory,
             forAllah: _forAllah,

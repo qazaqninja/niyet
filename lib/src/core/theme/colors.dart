@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Earth-toned color palette for Niyyah app
+/// Earth-toned color palette for Niyet app
 /// Calm, minimalist, and spiritually grounded
 class AppColors {
   const AppColors._();

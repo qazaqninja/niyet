@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 
-import 'niyyah_category.dart';
-import 'niyyah_outcome.dart';
+import 'niyet_category.dart';
+import 'niyet_outcome.dart';
 
-class Niyyah extends Equatable {
-  const Niyyah({
+class Niyet extends Equatable {
+  const Niyet({
     required this.id,
     required this.date,
     required this.text,
@@ -19,8 +19,8 @@ class Niyyah extends Equatable {
   final String id;
   final DateTime date;
   final String text;
-  final NiyyahCategory category;
-  final NiyyahOutcome? outcome;
+  final NiyetCategory category;
+  final NiyetOutcome? outcome;
   final String? reflection;
   final bool forAllah;
   final DateTime createdAt;
@@ -28,18 +28,18 @@ class Niyyah extends Equatable {
 
   bool get isReflected => outcome != null;
 
-  Niyyah copyWith({
+  Niyet copyWith({
     String? id,
     DateTime? date,
     String? text,
-    NiyyahCategory? category,
-    NiyyahOutcome? outcome,
+    NiyetCategory? category,
+    NiyetOutcome? outcome,
     String? reflection,
     bool? forAllah,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
-    return Niyyah(
+    return Niyet(
       id: id ?? this.id,
       date: date ?? this.date,
       text: text ?? this.text,

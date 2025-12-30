@@ -3,8 +3,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/calendar/presentation/pages/calendar_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
-import '../../features/niyyah/presentation/pages/muhasaba_page.dart';
-import '../../features/niyyah/presentation/pages/set_niyyah_page.dart';
+import '../../features/niyet/presentation/pages/muhasaba_page.dart';
+import '../../features/niyet/presentation/pages/set_niyet_page.dart';
 import '../../features/settings/presentation/pages/settings_page.dart';
 import 'router_names.dart';
 import 'router_paths.dart';
@@ -52,10 +52,10 @@ GoRouter createRouter() {
         ],
       ),
       GoRoute(
-        path: RoutePaths.setNiyyah,
-        name: RouteNames.setNiyyah,
+        path: RoutePaths.setNiyet,
+        name: RouteNames.setNiyet,
         parentNavigatorKey: rootNavigatorKey,
-        builder: (context, state) => const SetNiyyahPage(),
+        builder: (context, state) => const SetNiyetPage(),
       ),
       GoRoute(
         path: RoutePaths.muhasaba,

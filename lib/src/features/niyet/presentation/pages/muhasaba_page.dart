@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../domain/entities/niyyah.dart';
-import '../../domain/entities/niyyah_category.dart';
-import '../../domain/entities/niyyah_outcome.dart';
-import '../bloc/niyyah_bloc.dart';
+import '../../domain/entities/niyet.dart';
+import '../../domain/entities/niyet_category.dart';
+import '../../domain/entities/niyet_outcome.dart';
+import '../bloc/niyet_bloc.dart';
 import '../widgets/outcome_selector.dart';
 
 class MuhasabaPage extends StatelessWidget {
@@ -17,10 +17,10 @@ class MuhasabaPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Evening Reflection'),
       ),
-      body: BlocBuilder<NiyyahBloc, NiyyahState>(
+      body: BlocBuilder<NiyetBloc, NiyetState>(
         builder: (context, state) {
           final unreflected =
-              state.niyyat.where((n) => !n.isReflected).toList();
+              state.niyetler.where((n) => !n.isReflected).toList();
 
           if (unreflected.isEmpty) {
             return _AllReflectedView(
@@ -29,7 +29,7 @@ class MuhasabaPage extends StatelessWidget {
           }
 
           return _ReflectionFlow(
-            niyyat: unreflected,
+            niyetler: unreflected,
             onComplete: () => context.pop(),
           );
         },
@@ -82,11 +82,11 @@ class _AllReflectedView extends StatelessWidget {
 
 class _ReflectionFlow extends StatefulWidget {
   const _ReflectionFlow({
-    required this.niyyat,
+    required this.niyetler,
     required this.onComplete,
   });
 
-  final List<Niyyah> niyyat;
+  final List<Niyet> niyetler;
   final VoidCallback onComplete;
 
   @override
@@ -96,18 +96,18 @@ class _ReflectionFlow extends StatefulWidget {
 class _ReflectionFlowState extends State<_ReflectionFlow> {
   late int _totalCount;
   int _completedCount = 0;
-  NiyyahOutcome? _selectedOutcome;
+  NiyetOutcome? _selectedOutcome;
   final _reflectionController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _totalCount = widget.niyyat.length;
+    _totalCount = widget.niyetler.length;
   }
 
-  Niyyah? get _currentNiyyah =>
-      widget.niyyat.isNotEmpty ? widget.niyyat.first : null;
-  bool get _isLast => widget.niyyat.length <= 1;
+  Niyet? get _currentNiyet =>
+      widget.niyetler.isNotEmpty ? widget.niyetler.first : null;
+  bool get _isLast => widget.niyetler.length <= 1;
 
   @override
   void dispose() {
@@ -116,13 +116,13 @@ class _ReflectionFlowState extends State<_ReflectionFlow> {
   }
 
   void _saveAndNext() {
-    final current = _currentNiyyah;
+    final current = _currentNiyet;
     if (_selectedOutcome == null || current == null) return;
 
     final isLast = _isLast;
 
-    context.read<NiyyahBloc>().add(
-          NiyyahOutcomeUpdated(
+    context.read<NiyetBloc>().add(
+          NiyetOutcomeUpdated(
             id: current.id,
             outcome: _selectedOutcome!,
             reflection: _reflectionController.text.trim().isEmpty
@@ -146,7 +146,7 @@ class _ReflectionFlowState extends State<_ReflectionFlow> {
 
   @override
   Widget build(BuildContext context) {
-    final current = _currentNiyyah;
+    final current = _currentNiyet;
     if (current == null) {
       return const SizedBox.shrink();
     }
@@ -169,7 +169,7 @@ class _ReflectionFlowState extends State<_ReflectionFlow> {
           ),
           const SizedBox(height: 32),
 
-          // Current niyyah
+          // Current niyet
           Card(
             child: Padding(
               padding: const EdgeInsets.all(20),

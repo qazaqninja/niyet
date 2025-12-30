@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/colors.dart';
-import '../../domain/entities/niyyah_outcome.dart';
+import '../../domain/entities/niyet_outcome.dart';
 
 class OutcomeSelector extends StatelessWidget {
   const OutcomeSelector({
@@ -10,14 +10,14 @@ class OutcomeSelector extends StatelessWidget {
     super.key,
   });
 
-  final NiyyahOutcome? selected;
-  final ValueChanged<NiyyahOutcome> onSelected;
+  final NiyetOutcome? selected;
+  final ValueChanged<NiyetOutcome> onSelected;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: NiyyahOutcome.values.map((outcome) {
+      children: NiyetOutcome.values.map((outcome) {
         final isSelected = outcome == selected;
         return _OutcomeButton(
           outcome: outcome,
@@ -36,28 +36,28 @@ class _OutcomeButton extends StatelessWidget {
     required this.onTap,
   });
 
-  final NiyyahOutcome outcome;
+  final NiyetOutcome outcome;
   final bool isSelected;
   final VoidCallback onTap;
 
   Color get _color {
     switch (outcome) {
-      case NiyyahOutcome.fulfilled:
+      case NiyetOutcome.fulfilled:
         return AppColors.fulfilled;
-      case NiyyahOutcome.tried:
+      case NiyetOutcome.tried:
         return AppColors.tried;
-      case NiyyahOutcome.missed:
+      case NiyetOutcome.missed:
         return AppColors.missed;
     }
   }
 
   IconData get _icon {
     switch (outcome) {
-      case NiyyahOutcome.fulfilled:
+      case NiyetOutcome.fulfilled:
         return Icons.check_circle_outline;
-      case NiyyahOutcome.tried:
+      case NiyetOutcome.tried:
         return Icons.trending_up;
-      case NiyyahOutcome.missed:
+      case NiyetOutcome.missed:
         return Icons.remove_circle_outline;
     }
   }

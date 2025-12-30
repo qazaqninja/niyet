@@ -17,5 +17,5 @@ Future<void> main() async {
   // Initialize database
   await AppDatabase.init();
 
-  runApp(const NiyyahApp());
+  runApp(const NiyetApp());
 }

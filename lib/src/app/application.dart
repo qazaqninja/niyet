@@ -5,18 +5,18 @@ import 'package:go_router/go_router.dart';
 
 import '../core/router/router.dart';
 import '../core/theme/theme.dart';
-import '../features/niyyah/presentation/bloc/niyyah_bloc.dart';
+import '../features/niyet/presentation/bloc/niyet_bloc.dart';
 import '../core/services/injectable/injectable_service.dart';
 import 'flavor_config.dart';
 
-class NiyyahApp extends StatefulWidget {
-  const NiyyahApp({super.key});
+class NiyetApp extends StatefulWidget {
+  const NiyetApp({super.key});
 
   @override
-  State<NiyyahApp> createState() => _NiyyahAppState();
+  State<NiyetApp> createState() => _NiyetAppState();
 }
 
-class _NiyyahAppState extends State<NiyyahApp> {
+class _NiyetAppState extends State<NiyetApp> {
   late final GoRouter _router;
 
   @override
@@ -29,7 +29,7 @@ class _NiyyahAppState extends State<NiyyahApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => getIt<NiyyahBloc>()),
+        BlocProvider(create: (_) => getIt<NiyetBloc>()),
       ],
       child: MaterialApp.router(
         title: FlavorConfig.instance.appTitle,

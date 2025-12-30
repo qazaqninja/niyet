@@ -1,4 +1,4 @@
-enum NiyyahCategory {
+enum NiyetCategory {
   ibadah,   // Worship
   akhlaq,   // Character
   family,   // Family
@@ -6,33 +6,33 @@ enum NiyyahCategory {
   work,     // Work
 }
 
-extension NiyyahCategoryExtension on NiyyahCategory {
+extension NiyetCategoryExtension on NiyetCategory {
   String get label {
     switch (this) {
-      case NiyyahCategory.ibadah:
+      case NiyetCategory.ibadah:
         return 'Worship';
-      case NiyyahCategory.akhlaq:
+      case NiyetCategory.akhlaq:
         return 'Character';
-      case NiyyahCategory.family:
+      case NiyetCategory.family:
         return 'Family';
-      case NiyyahCategory.charity:
+      case NiyetCategory.charity:
         return 'Charity';
-      case NiyyahCategory.work:
+      case NiyetCategory.work:
         return 'Work';
     }
   }
 
   String get arabicLabel {
     switch (this) {
-      case NiyyahCategory.ibadah:
+      case NiyetCategory.ibadah:
         return 'عبادة';
-      case NiyyahCategory.akhlaq:
+      case NiyetCategory.akhlaq:
         return 'أخلاق';
-      case NiyyahCategory.family:
+      case NiyetCategory.family:
         return 'عائلة';
-      case NiyyahCategory.charity:
+      case NiyetCategory.charity:
         return 'صدقة';
-      case NiyyahCategory.work:
+      case NiyetCategory.work:
         return 'عمل';
     }
   }

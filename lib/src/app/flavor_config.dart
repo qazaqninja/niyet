@@ -27,9 +27,9 @@ class FlavorConfig {
   String get appTitle {
     switch (flavor) {
       case AppFlavor.dev:
-        return 'Niyyah (Dev)';
+        return 'Niyet (Dev)';
       case AppFlavor.prod:
-        return 'Niyyah';
+        return 'Niyet';
     }
   }
 }

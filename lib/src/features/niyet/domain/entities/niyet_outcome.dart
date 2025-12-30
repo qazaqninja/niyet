@@ -1,28 +1,28 @@
-enum NiyyahOutcome {
+enum NiyetOutcome {
   fulfilled,  // Intention was fulfilled
   tried,      // Made effort but didn't complete
   missed,     // Didn't attempt
 }
 
-extension NiyyahOutcomeExtension on NiyyahOutcome {
+extension NiyetOutcomeExtension on NiyetOutcome {
   String get label {
     switch (this) {
-      case NiyyahOutcome.fulfilled:
+      case NiyetOutcome.fulfilled:
         return 'Fulfilled';
-      case NiyyahOutcome.tried:
+      case NiyetOutcome.tried:
         return 'Tried';
-      case NiyyahOutcome.missed:
+      case NiyetOutcome.missed:
         return 'Missed';
     }
   }
 
   String get emoji {
     switch (this) {
-      case NiyyahOutcome.fulfilled:
+      case NiyetOutcome.fulfilled:
         return '✓';
-      case NiyyahOutcome.tried:
+      case NiyetOutcome.tried:
         return '~';
-      case NiyyahOutcome.missed:
+      case NiyetOutcome.missed:
         return '·';
     }
   }

@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/router/router_paths.dart';
-import '../../../niyyah/presentation/bloc/niyyah_bloc.dart';
-import '../../../niyyah/presentation/widgets/niyyah_card.dart';
+import '../../../niyet/presentation/bloc/niyet_bloc.dart';
+import '../../../niyet/presentation/widgets/niyet_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    context.read<NiyyahBloc>().add(const NiyyahLoadRequested());
+    context.read<NiyetBloc>().add(const NiyetLoadRequested());
   }
 
   bool get _isMorning {
@@ -29,10 +29,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Niyyah'),
+        title: const Text('Niyet'),
         centerTitle: false,
       ),
-      body: BlocBuilder<NiyyahBloc, NiyyahState>(
+      body: BlocBuilder<NiyetBloc, NiyetState>(
         builder: (context, state) {
           if (state.isLoading) {
             return const Center(child: CircularProgressIndicator());
@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                         child: _ActionCard(
                           icon: Icons.add_circle_outline,
                           label: 'Set Intention',
-                          onTap: () => context.push(RoutePaths.setNiyyah),
+                          onTap: () => context.push(RoutePaths.setNiyet),
                           isPrimary: _isMorning,
                         ),
                       ),
@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
                           label: 'Reflect',
                           onTap: () => context.push(RoutePaths.muhasaba),
                           isPrimary: !_isMorning,
-                          badge: state.niyyat
+                          badge: state.niyetler
                                   .where((n) => !n.isReflected)
                                   .length
                                   .toString(),
@@ -101,7 +101,7 @@ class _HomePageState extends State<HomePage> {
               ),
 
               // Today's intentions header
-              if (state.niyyat.isNotEmpty) ...[
+              if (state.niyetler.isNotEmpty) ...[
                 SliverToBoxAdapter(
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(20, 32, 20, 12),
@@ -124,24 +124,24 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
 
-                // Niyyat list
+                // Niyetler list
                 SliverPadding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   sliver: SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
-                        final niyyah = state.niyyat[index];
+                        final niyet = state.niyetler[index];
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 12),
-                          child: NiyyahCard(
-                            niyyah: niyyah,
-                            onTap: niyyah.isReflected
+                          child: NiyetCard(
+                            niyet: niyet,
+                            onTap: niyet.isReflected
                                 ? null
                                 : () => context.push(RoutePaths.muhasaba),
                           ),
                         );
                       },
-                      childCount: state.niyyat.length,
+                      childCount: state.niyetler.length,
                     ),
                   ),
                 ),
@@ -178,7 +178,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           const SizedBox(height: 24),
                           ElevatedButton.icon(
-                            onPressed: () => context.push(RoutePaths.setNiyyah),
+                            onPressed: () => context.push(RoutePaths.setNiyet),
                             icon: const Icon(Icons.add),
                             label: const Text('Set Intention'),
                           ),

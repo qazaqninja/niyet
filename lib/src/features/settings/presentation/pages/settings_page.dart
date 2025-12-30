@@ -46,7 +46,7 @@ class SettingsPage extends StatelessWidget {
             onTap: () {
               showAboutDialog(
                 context: context,
-                applicationName: 'Niyyah',
+                applicationName: 'Niyet',
                 applicationVersion: '1.0.0',
                 applicationLegalese: '© 2024 Qazaq Ninja',
               );

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/colors.dart';
-import '../../domain/entities/niyyah.dart';
-import '../../domain/entities/niyyah_category.dart';
-import '../../domain/entities/niyyah_outcome.dart';
+import '../../domain/entities/niyet.dart';
+import '../../domain/entities/niyet_category.dart';
+import '../../domain/entities/niyet_outcome.dart';
 
-class NiyyahCard extends StatelessWidget {
-  const NiyyahCard({required this.niyyah, this.onTap, super.key});
+class NiyetCard extends StatelessWidget {
+  const NiyetCard({required this.niyet, this.onTap, super.key});
 
-  final Niyyah niyyah;
+  final Niyet niyet;
   final VoidCallback? onTap;
 
   @override
@@ -24,26 +24,26 @@ class NiyyahCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  _CategoryChip(category: niyyah.category),
+                  _CategoryChip(category: niyet.category),
                   const Spacer(),
-                  if (niyyah.forAllah)
+                  if (niyet.forAllah)
                     Icon(
                       Icons.favorite,
                       size: 16,
                       color: AppColors.accent.withValues(alpha: 0.7),
                     ),
-                  if (niyyah.outcome != null) ...[
+                  if (niyet.outcome != null) ...[
                     const SizedBox(width: 8),
-                    _OutcomeIndicator(outcome: niyyah.outcome!),
+                    _OutcomeIndicator(outcome: niyet.outcome!),
                   ],
                 ],
               ),
               const SizedBox(height: 12),
-              Text(niyyah.text, style: Theme.of(context).textTheme.bodyLarge),
-              if (niyyah.reflection != null) ...[
+              Text(niyet.text, style: Theme.of(context).textTheme.bodyLarge),
+              if (niyet.reflection != null) ...[
                 const SizedBox(height: 8),
                 Text(
-                  niyyah.reflection!,
+                  niyet.reflection!,
                   style: Theme.of(
                     context,
                   ).textTheme.bodySmall?.copyWith(fontStyle: FontStyle.italic),
@@ -62,19 +62,19 @@ class NiyyahCard extends StatelessWidget {
 class _CategoryChip extends StatelessWidget {
   const _CategoryChip({required this.category});
 
-  final NiyyahCategory category;
+  final NiyetCategory category;
 
   Color get _color {
     switch (category) {
-      case NiyyahCategory.ibadah:
+      case NiyetCategory.ibadah:
         return AppColors.ibadah;
-      case NiyyahCategory.akhlaq:
+      case NiyetCategory.akhlaq:
         return AppColors.akhlaq;
-      case NiyyahCategory.family:
+      case NiyetCategory.family:
         return AppColors.family;
-      case NiyyahCategory.charity:
+      case NiyetCategory.charity:
         return AppColors.charity;
-      case NiyyahCategory.work:
+      case NiyetCategory.work:
         return AppColors.work;
     }
   }
@@ -101,15 +101,15 @@ class _CategoryChip extends StatelessWidget {
 class _OutcomeIndicator extends StatelessWidget {
   const _OutcomeIndicator({required this.outcome});
 
-  final NiyyahOutcome outcome;
+  final NiyetOutcome outcome;
 
   Color get _color {
     switch (outcome) {
-      case NiyyahOutcome.fulfilled:
+      case NiyetOutcome.fulfilled:
         return AppColors.fulfilled;
-      case NiyyahOutcome.tried:
+      case NiyetOutcome.tried:
         return AppColors.tried;
-      case NiyyahOutcome.missed:
+      case NiyetOutcome.missed:
         return AppColors.missed;
     }
   }
