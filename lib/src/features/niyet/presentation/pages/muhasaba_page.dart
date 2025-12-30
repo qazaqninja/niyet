@@ -45,6 +45,10 @@ class _AllReflectedView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
@@ -54,18 +58,18 @@ class _AllReflectedView extends StatelessWidget {
             Icon(
               Icons.check_circle,
               size: 80,
-              color: Theme.of(context).colorScheme.primary,
+              color: colorScheme.primary,
             ),
             const SizedBox(height: 24),
             Text(
               'All intentions reflected',
-              style: Theme.of(context).textTheme.headlineSmall,
+              style: textTheme.headlineSmall,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 12),
             Text(
               'May Allah accept your efforts',
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: textTheme.bodyMedium,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 32),
@@ -151,87 +155,93 @@ class _ReflectionFlowState extends State<_ReflectionFlow> {
       return const SizedBox.shrink();
     }
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Progress indicator
-          LinearProgressIndicator(
-            value: (_completedCount + 1) / _totalCount,
-            backgroundColor:
-                Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            '${_completedCount + 1} of $_totalCount',
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-          const SizedBox(height: 32),
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
 
-          // Current niyet
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    current.category.label,
-                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    current.text,
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                ],
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Progress indicator
+            LinearProgressIndicator(
+              value: (_completedCount + 1) / _totalCount,
+              backgroundColor: colorScheme.primary.withValues(alpha: 0.2),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              '${_completedCount + 1} of $_totalCount',
+              style: textTheme.bodySmall,
+            ),
+            const SizedBox(height: 32),
+
+            // Current niyet
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      current.category.label,
+                      style: textTheme.labelMedium?.copyWith(
+                        color: colorScheme.primary,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      current.text,
+                      style: textTheme.titleLarge,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 32),
+            const SizedBox(height: 32),
 
-          // Outcome question
-          Text(
-            'How did it go?',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          const SizedBox(height: 16),
-          OutcomeSelector(
-            selected: _selectedOutcome,
-            onSelected: (outcome) {
-              setState(() => _selectedOutcome = outcome);
-            },
-          ),
-          const SizedBox(height: 32),
-
-          // Reflection (optional)
-          Text(
-            'Reflection (optional)',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          const SizedBox(height: 12),
-          TextField(
-            controller: _reflectionController,
-            maxLines: 3,
-            textCapitalization: TextCapitalization.sentences,
-            decoration: const InputDecoration(
-              hintText: 'What helped? What distracted?',
+            // Outcome question
+            Text(
+              'How did it go?',
+              style: textTheme.titleMedium,
             ),
-          ),
-          const SizedBox(height: 32),
-
-          // Action button
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: _selectedOutcome != null ? _saveAndNext : null,
-              child: Text(_isLast ? 'Complete' : 'Next'),
+            const SizedBox(height: 16),
+            OutcomeSelector(
+              selected: _selectedOutcome,
+              onSelected: (outcome) {
+                setState(() => _selectedOutcome = outcome);
+              },
             ),
-          ),
-        ],
+            const SizedBox(height: 32),
+
+            // Reflection (optional)
+            Text(
+              'Reflection (optional)',
+              style: textTheme.titleMedium,
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              controller: _reflectionController,
+              maxLines: 3,
+              textCapitalization: TextCapitalization.sentences,
+              decoration: const InputDecoration(
+                hintText: 'What helped? What distracted?',
+              ),
+            ),
+            const SizedBox(height: 32),
+
+            // Action button
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: _selectedOutcome != null ? _saveAndNext : null,
+                child: Text(_isLast ? 'Complete' : 'Next'),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

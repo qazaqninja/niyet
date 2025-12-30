@@ -39,92 +39,96 @@ class _SetNiyetPageState extends State<SetNiyetPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Set Intention'),
-        actions: [
-          TextButton(
-            onPressed: _save,
-            child: const Text('Save'),
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Hadith reminder
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Theme.of(context)
-                    .colorScheme
-                    .primaryContainer
-                    .withValues(alpha: 0.3),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.format_quote,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      'Actions are judged by intentions',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontStyle: FontStyle.italic,
-                          ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 32),
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
 
-            // Intention text field
-            Text(
-              'What is your intention today?',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: _textController,
-              maxLines: 3,
-              textCapitalization: TextCapitalization.sentences,
-              decoration: const InputDecoration(
-                hintText: 'e.g., Be patient with family',
-              ),
-            ),
-            const SizedBox(height: 32),
-
-            // Category selector
-            Text(
-              'Category',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 12),
-            CategorySelector(
-              selected: _selectedCategory,
-              onSelected: (category) {
-                setState(() => _selectedCategory = category);
-              },
-            ),
-            const SizedBox(height: 32),
-
-            // For Allah toggle
-            SwitchListTile(
-              title: const Text('For the sake of Allah'),
-              subtitle: const Text('A reminder of your sincere intention'),
-              value: _forAllah,
-              onChanged: (value) {
-                setState(() => _forAllah = value);
-              },
-              contentPadding: EdgeInsets.zero,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Set Intention'),
+          actions: [
+            TextButton(
+              onPressed: _save,
+              child: const Text('Save'),
             ),
           ],
+        ),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Hadith reminder
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: colorScheme.primaryContainer.withValues(alpha: 0.3),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.format_quote,
+                      color: colorScheme.primary,
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        'Actions are judged by intentions',
+                        style: textTheme.bodyMedium?.copyWith(
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 32),
+
+              // Intention text field
+              Text(
+                'What is your intention today?',
+                style: textTheme.titleMedium,
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: _textController,
+                maxLines: 3,
+                textCapitalization: TextCapitalization.sentences,
+                decoration: const InputDecoration(
+                  hintText: 'e.g., Be patient with family',
+                ),
+              ),
+              const SizedBox(height: 32),
+
+              // Category selector
+              Text(
+                'Category',
+                style: textTheme.titleMedium,
+              ),
+              const SizedBox(height: 12),
+              CategorySelector(
+                selected: _selectedCategory,
+                onSelected: (category) {
+                  setState(() => _selectedCategory = category);
+                },
+              ),
+              const SizedBox(height: 32),
+
+              // For Allah toggle
+              SwitchListTile(
+                title: const Text('For the sake of Allah'),
+                subtitle: const Text('A reminder of your sincere intention'),
+                value: _forAllah,
+                onChanged: (value) {
+                  setState(() => _forAllah = value);
+                },
+                contentPadding: EdgeInsets.zero,
+              ),
+            ],
+          ),
         ),
       ),
     );

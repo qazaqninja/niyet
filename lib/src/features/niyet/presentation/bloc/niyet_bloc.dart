@@ -23,11 +23,11 @@ class NiyetBloc extends Bloc<NiyetEvent, NiyetState> {
     required CreateNiyetUseCase createNiyet,
     required UpdateNiyetOutcomeUseCase updateNiyetOutcome,
     required NiyetRepository repository,
-  })  : _getTodayNiyetler = getTodayNiyetler,
-        _createNiyet = createNiyet,
-        _updateNiyetOutcome = updateNiyetOutcome,
-        _repository = repository,
-        super(const NiyetState()) {
+  }) : _getTodayNiyetler = getTodayNiyetler,
+       _createNiyet = createNiyet,
+       _updateNiyetOutcome = updateNiyetOutcome,
+       _repository = repository,
+       super(NiyetState()) {
     on<NiyetLoadRequested>(_onLoadRequested);
     on<NiyetCreated>(_onCreated);
     on<NiyetOutcomeUpdated>(_onOutcomeUpdated);
@@ -36,10 +36,7 @@ class NiyetBloc extends Bloc<NiyetEvent, NiyetState> {
     // Subscribe to real-time updates
     _subscription = _repository.watchTodayNiyetler().listen((niyetler) {
       // ignore: invalid_use_of_visible_for_testing_member
-      emit(state.copyWith(
-        status: NiyetStatus.success,
-        niyetler: niyetler,
-      ));
+      emit(state.copyWith(status: NiyetStatus.success, niyetler: niyetler));
     });
   }
 
@@ -58,21 +55,15 @@ class NiyetBloc extends Bloc<NiyetEvent, NiyetState> {
 
     final result = await _getTodayNiyetler(const NoParams());
     result.when(
-      success: (niyetler) => emit(state.copyWith(
-        status: NiyetStatus.success,
-        niyetler: niyetler,
-      )),
-      failure: (e) => emit(state.copyWith(
-        status: NiyetStatus.failure,
-        error: e.toString(),
-      )),
+      success: (niyetler) =>
+          emit(state.copyWith(status: NiyetStatus.success, niyetler: niyetler)),
+      failure: (e) => emit(
+        state.copyWith(status: NiyetStatus.failure, error: e.toString()),
+      ),
     );
   }
 
-  Future<void> _onCreated(
-    NiyetCreated event,
-    Emitter<NiyetState> emit,
-  ) async {
+  Future<void> _onCreated(NiyetCreated event, Emitter<NiyetState> emit) async {
     final params = CreateNiyetParams(
       text: event.text,
       category: event.category,
@@ -81,13 +72,15 @@ class NiyetBloc extends Bloc<NiyetEvent, NiyetState> {
 
     final result = await _createNiyet(params);
     result.when(
-      success: (niyet) {
-        // Stream will update the state
-      },
-      failure: (e) => emit(state.copyWith(
-        status: NiyetStatus.failure,
-        error: e.toString(),
-      )),
+      success: (niyet) => emit(
+        state.copyWith(
+          status: NiyetStatus.success,
+          niyetler: [...state.niyetler, niyet],
+        ),
+      ),
+      failure: (e) => emit(
+        state.copyWith(status: NiyetStatus.failure, error: e.toString()),
+      ),
     );
   }
 
@@ -103,29 +96,32 @@ class NiyetBloc extends Bloc<NiyetEvent, NiyetState> {
 
     final result = await _updateNiyetOutcome(params);
     result.when(
-      success: (niyet) {
-        // Stream will update the state
-      },
-      failure: (e) => emit(state.copyWith(
-        status: NiyetStatus.failure,
-        error: e.toString(),
-      )),
+      success: (niyet) => emit(
+        state.copyWith(
+          status: NiyetStatus.success,
+          niyetler: state.niyetler
+              .map((n) => n.id == niyet.id ? niyet : n)
+              .toList(),
+        ),
+      ),
+      failure: (e) => emit(
+        state.copyWith(status: NiyetStatus.failure, error: e.toString()),
+      ),
     );
   }
 
-  Future<void> _onDeleted(
-    NiyetDeleted event,
-    Emitter<NiyetState> emit,
-  ) async {
+  Future<void> _onDeleted(NiyetDeleted event, Emitter<NiyetState> emit) async {
     final result = await _repository.deleteNiyet(event.id);
     result.when(
-      success: (_) {
-        // Stream will update the state
-      },
-      failure: (e) => emit(state.copyWith(
-        status: NiyetStatus.failure,
-        error: e.toString(),
-      )),
+      success: (_) => emit(
+        state.copyWith(
+          status: NiyetStatus.success,
+          niyetler: state.niyetler.where((n) => n.id != event.id).toList(),
+        ),
+      ),
+      failure: (e) => emit(
+        state.copyWith(status: NiyetStatus.failure, error: e.toString()),
+      ),
     );
   }
 

@@ -38,6 +38,10 @@ class _HomePageState extends State<HomePage> {
             return const Center(child: CircularProgressIndicator());
           }
 
+          final theme = Theme.of(context);
+          final colorScheme = theme.colorScheme;
+          final textTheme = theme.textTheme;
+
           return CustomScrollView(
             slivers: [
               // Greeting section
@@ -49,19 +53,16 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Text(
                         _isMorning ? 'Good morning' : 'Good evening',
-                        style: Theme.of(context).textTheme.headlineMedium,
+                        style: textTheme.headlineMedium,
                       ),
                       const SizedBox(height: 4),
                       Text(
                         _isMorning
                             ? 'Set your intentions for today'
                             : 'Time for reflection',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall
-                                  ?.color,
-                            ),
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: textTheme.bodySmall?.color,
+                        ),
                       ),
                     ],
                   ),
@@ -89,10 +90,9 @@ class _HomePageState extends State<HomePage> {
                           label: 'Reflect',
                           onTap: () => context.push(RoutePaths.muhasaba),
                           isPrimary: !_isMorning,
-                          badge: state.niyetler
-                                  .where((n) => !n.isReflected)
-                                  .length
-                                  .toString(),
+                          badge: state.unreflectedCount > 0
+                              ? state.unreflectedCount.toString()
+                              : null,
                         ),
                       ),
                     ],
@@ -109,15 +109,14 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Text(
                           "Today's Intentions",
-                          style: Theme.of(context).textTheme.titleMedium,
+                          style: textTheme.titleMedium,
                         ),
                         const Spacer(),
                         Text(
                           '${state.reflectedCount}/${state.todayCount}',
-                          style:
-                              Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: Theme.of(context).colorScheme.primary,
-                                  ),
+                          style: textTheme.bodySmall?.copyWith(
+                            color: colorScheme.primary,
+                          ),
                         ),
                       ],
                     ),
@@ -160,20 +159,17 @@ class _HomePageState extends State<HomePage> {
                           Icon(
                             Icons.wb_sunny_outlined,
                             size: 64,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .primary
-                                .withValues(alpha: 0.5),
+                            color: colorScheme.primary.withValues(alpha: 0.5),
                           ),
                           const SizedBox(height: 16),
                           Text(
                             'No intentions yet',
-                            style: Theme.of(context).textTheme.titleMedium,
+                            style: textTheme.titleMedium,
                           ),
                           const SizedBox(height: 8),
                           Text(
                             'Set your first intention for today',
-                            style: Theme.of(context).textTheme.bodyMedium,
+                            style: textTheme.bodyMedium,
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 24),
@@ -217,8 +213,13 @@ class _ActionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+    final primaryColor = colorScheme.primary;
+
     return Card(
-      color: isPrimary ? Theme.of(context).colorScheme.primary : null,
+      color: isPrimary ? primaryColor : null,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(16),
@@ -231,11 +232,9 @@ class _ActionCard extends StatelessWidget {
                 children: [
                   Icon(
                     icon,
-                    color: isPrimary
-                        ? Colors.white
-                        : Theme.of(context).colorScheme.primary,
+                    color: isPrimary ? Colors.white : primaryColor,
                   ),
-                  if (badge != null && badge != '0') ...[
+                  if (badge != null) ...[
                     const Spacer(),
                     Container(
                       padding: const EdgeInsets.symmetric(
@@ -245,19 +244,14 @@ class _ActionCard extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: isPrimary
                             ? Colors.white.withValues(alpha: 0.2)
-                            : Theme.of(context)
-                                .colorScheme
-                                .primary
-                                .withValues(alpha: 0.1),
+                            : primaryColor.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
                         badge!,
-                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                              color: isPrimary
-                                  ? Colors.white
-                                  : Theme.of(context).colorScheme.primary,
-                            ),
+                        style: textTheme.labelSmall?.copyWith(
+                          color: isPrimary ? Colors.white : primaryColor,
+                        ),
                       ),
                     ),
                   ],
@@ -266,9 +260,9 @@ class _ActionCard extends StatelessWidget {
               const SizedBox(height: 12),
               Text(
                 label,
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      color: isPrimary ? Colors.white : null,
-                    ),
+                style: textTheme.titleSmall?.copyWith(
+                  color: isPrimary ? Colors.white : null,
+                ),
               ),
             ],
           ),
