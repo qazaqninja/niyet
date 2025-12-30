@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/localization/localization_extension.dart';
 import '../../domain/entities/niyet.dart';
 import '../../domain/entities/niyet_category.dart';
 import '../../domain/entities/niyet_outcome.dart';
@@ -15,7 +16,7 @@ class MuhasabaPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Evening Reflection'),
+        title: Text(context.loc.eveningReflection),
       ),
       body: BlocBuilder<NiyetBloc, NiyetState>(
         builder: (context, state) {
@@ -62,20 +63,20 @@ class _AllReflectedView extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              'All intentions reflected',
+              context.loc.allIntentionsReflected,
               style: textTheme.headlineSmall,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 12),
             Text(
-              'May Allah accept your efforts',
+              context.loc.mayAllahAccept,
               style: textTheme.bodyMedium,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 32),
             ElevatedButton(
               onPressed: onDone,
-              child: const Text('Done'),
+              child: Text(context.loc.complete),
             ),
           ],
         ),
@@ -204,7 +205,7 @@ class _ReflectionFlowState extends State<_ReflectionFlow> {
 
             // Outcome question
             Text(
-              'How did it go?',
+              context.loc.howDidItGo,
               style: textTheme.titleMedium,
             ),
             const SizedBox(height: 16),
@@ -218,7 +219,7 @@ class _ReflectionFlowState extends State<_ReflectionFlow> {
 
             // Reflection (optional)
             Text(
-              'Reflection (optional)',
+              '${context.loc.reflection} (optional)',
               style: textTheme.titleMedium,
             ),
             const SizedBox(height: 12),
@@ -226,8 +227,8 @@ class _ReflectionFlowState extends State<_ReflectionFlow> {
               controller: _reflectionController,
               maxLines: 3,
               textCapitalization: TextCapitalization.sentences,
-              decoration: const InputDecoration(
-                hintText: 'What helped? What distracted?',
+              decoration: InputDecoration(
+                hintText: context.loc.reflectionPlaceholder,
               ),
             ),
             const SizedBox(height: 32),
@@ -237,7 +238,7 @@ class _ReflectionFlowState extends State<_ReflectionFlow> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: _selectedOutcome != null ? _saveAndNext : null,
-                child: Text(_isLast ? 'Complete' : 'Next'),
+                child: Text(_isLast ? context.loc.complete : context.loc.next),
               ),
             ),
           ],

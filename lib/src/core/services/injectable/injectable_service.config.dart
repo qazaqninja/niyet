@@ -14,6 +14,10 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'package:niyet/src/core/db/app_database.dart' as _i364;
 import 'package:niyet/src/core/services/injectable/modules/database_module.dart'
     as _i423;
+import 'package:niyet/src/core/services/injectable/modules/preferences_module.dart'
+    as _i542;
+import 'package:niyet/src/core/services/preferences/preferences_service.dart'
+    as _i1006;
 import 'package:niyet/src/features/niyet/data/datasources/niyet_local_datasource.dart'
     as _i972;
 import 'package:niyet/src/features/niyet/data/repositories/niyet_repository_impl.dart'
@@ -30,18 +34,34 @@ import 'package:niyet/src/features/niyet/domain/usecases/update_niyet_outcome_us
     as _i684;
 import 'package:niyet/src/features/niyet/presentation/bloc/niyet_bloc.dart'
     as _i507;
+import 'package:niyet/src/features/onboarding/presentation/bloc/onboarding_bloc.dart'
+    as _i620;
+import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
-  _i174.GetIt init({
+  Future<_i174.GetIt> init({
     String? environment,
     _i526.EnvironmentFilter? environmentFilter,
-  }) {
+  }) async {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
+    final preferencesModule = _$PreferencesModule();
     final databaseModule = _$DatabaseModule();
+    await gh.factoryAsync<_i460.SharedPreferences>(
+      () => preferencesModule.prefs,
+      preResolve: true,
+    );
     gh.lazySingleton<_i364.AppDatabase>(() => databaseModule.database);
     gh.lazySingleton<_i972.NiyetLocalDataSource>(
       () => _i972.NiyetLocalDataSourceImpl(gh<_i364.AppDatabase>()),
+    );
+    gh.lazySingleton<_i1006.PreferencesService>(
+      () => _i1006.PreferencesServiceImpl(gh<_i460.SharedPreferences>()),
+    );
+    gh.factory<_i620.OnboardingBloc>(
+      () => _i620.OnboardingBloc(
+        preferencesService: gh<_i1006.PreferencesService>(),
+      ),
     );
     gh.lazySingleton<_i869.NiyetRepository>(
       () => _i807.NiyetRepositoryImpl(gh<_i972.NiyetLocalDataSource>()),
@@ -69,5 +89,7 @@ extension GetItInjectableX on _i174.GetIt {
     return this;
   }
 }
+
+class _$PreferencesModule extends _i542.PreferencesModule {}
 
 class _$DatabaseModule extends _i423.DatabaseModule {}

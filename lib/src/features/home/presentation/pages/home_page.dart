@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/localization/localization_extension.dart';
 import '../../../../core/router/router_paths.dart';
 import '../../../niyet/presentation/bloc/niyet_bloc.dart';
 import '../../../niyet/presentation/widgets/niyet_card.dart';
@@ -29,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Niyet'),
+        title: Text(context.loc.appTitle),
         centerTitle: false,
       ),
       body: BlocBuilder<NiyetBloc, NiyetState>(
@@ -52,14 +53,16 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        _isMorning ? 'Good morning' : 'Good evening',
+                        _isMorning
+                            ? context.loc.morningGreeting
+                            : context.loc.eveningGreeting,
                         style: textTheme.headlineMedium,
                       ),
                       const SizedBox(height: 4),
                       Text(
                         _isMorning
-                            ? 'Set your intentions for today'
-                            : 'Time for reflection',
+                            ? context.loc.setIntentionsForToday
+                            : context.loc.timeForReflection,
                         style: textTheme.bodyMedium?.copyWith(
                           color: textTheme.bodySmall?.color,
                         ),
@@ -78,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                       Expanded(
                         child: _ActionCard(
                           icon: Icons.add_circle_outline,
-                          label: 'Set Intention',
+                          label: context.loc.setNiyet,
                           onTap: () => context.push(RoutePaths.setNiyet),
                           isPrimary: _isMorning,
                         ),
@@ -87,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                       Expanded(
                         child: _ActionCard(
                           icon: Icons.nightlight_outlined,
-                          label: 'Reflect',
+                          label: context.loc.reflect,
                           onTap: () => context.push(RoutePaths.muhasaba),
                           isPrimary: !_isMorning,
                           badge: state.unreflectedCount > 0
@@ -108,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                     child: Row(
                       children: [
                         Text(
-                          "Today's Intentions",
+                          context.loc.todayIntentions,
                           style: textTheme.titleMedium,
                         ),
                         const Spacer(),
@@ -163,12 +166,12 @@ class _HomePageState extends State<HomePage> {
                           ),
                           const SizedBox(height: 16),
                           Text(
-                            'No intentions yet',
+                            context.loc.noIntentionsYet,
                             style: textTheme.titleMedium,
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            'Set your first intention for today',
+                            context.loc.setYourFirstIntention,
                             style: textTheme.bodyMedium,
                             textAlign: TextAlign.center,
                           ),
@@ -176,7 +179,7 @@ class _HomePageState extends State<HomePage> {
                           ElevatedButton.icon(
                             onPressed: () => context.push(RoutePaths.setNiyet),
                             icon: const Icon(Icons.add),
-                            label: const Text('Set Intention'),
+                            label: Text(context.loc.setNiyet),
                           ),
                         ],
                       ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/localization/localization_extension.dart';
 import '../../domain/entities/niyet_category.dart';
 import '../bloc/niyet_bloc.dart';
 import '../widgets/category_selector.dart';
@@ -47,11 +48,11 @@ class _SetNiyetPageState extends State<SetNiyetPage> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Set Intention'),
+          title: Text(context.loc.setNiyet),
           actions: [
             TextButton(
               onPressed: _save,
-              child: const Text('Save'),
+              child: Text(context.loc.save),
             ),
           ],
         ),
@@ -76,7 +77,7 @@ class _SetNiyetPageState extends State<SetNiyetPage> {
                     const SizedBox(width: 12),
                     Expanded(
                       child: Text(
-                        'Actions are judged by intentions',
+                        context.loc.hadithReminder,
                         style: textTheme.bodyMedium?.copyWith(
                           fontStyle: FontStyle.italic,
                         ),
@@ -89,7 +90,7 @@ class _SetNiyetPageState extends State<SetNiyetPage> {
 
               // Intention text field
               Text(
-                'What is your intention today?',
+                context.loc.whatIsYourIntention,
                 style: textTheme.titleMedium,
               ),
               const SizedBox(height: 12),
@@ -97,15 +98,15 @@ class _SetNiyetPageState extends State<SetNiyetPage> {
                 controller: _textController,
                 maxLines: 3,
                 textCapitalization: TextCapitalization.sentences,
-                decoration: const InputDecoration(
-                  hintText: 'e.g., Be patient with family',
+                decoration: InputDecoration(
+                  hintText: context.loc.intentionPlaceholder,
                 ),
               ),
               const SizedBox(height: 32),
 
               // Category selector
               Text(
-                'Category',
+                context.loc.category,
                 style: textTheme.titleMedium,
               ),
               const SizedBox(height: 12),
@@ -119,8 +120,7 @@ class _SetNiyetPageState extends State<SetNiyetPage> {
 
               // For Allah toggle
               SwitchListTile(
-                title: const Text('For the sake of Allah'),
-                subtitle: const Text('A reminder of your sincere intention'),
+                title: Text(context.loc.forTheSakeOfAllah),
                 value: _forAllah,
                 onChanged: (value) {
                   setState(() => _forAllah = value);

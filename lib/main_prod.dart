@@ -4,6 +4,7 @@ import 'src/app/application.dart';
 import 'src/app/flavor_config.dart';
 import 'src/core/db/app_database.dart';
 import 'src/core/services/injectable/injectable_service.dart';
+import 'src/core/services/preferences/preferences_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,5 +18,9 @@ Future<void> main() async {
   // Initialize database
   await AppDatabase.init();
 
-  runApp(const NiyetApp());
+  // Check onboarding status
+  final prefsService = getIt<PreferencesService>();
+  final hasCompletedOnboarding = await prefsService.hasCompletedOnboarding();
+
+  runApp(NiyetApp(showOnboarding: !hasCompletedOnboarding));
 }

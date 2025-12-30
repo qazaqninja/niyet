@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
 
+import '../core/localization/generated/app_localizations.dart';
 import '../core/router/router.dart';
 import '../core/theme/theme.dart';
 import '../features/niyet/presentation/bloc/niyet_bloc.dart';
@@ -10,7 +11,12 @@ import '../core/services/injectable/injectable_service.dart';
 import 'flavor_config.dart';
 
 class NiyetApp extends StatefulWidget {
-  const NiyetApp({super.key});
+  const NiyetApp({
+    this.showOnboarding = false,
+    super.key,
+  });
+
+  final bool showOnboarding;
 
   @override
   State<NiyetApp> createState() => _NiyetAppState();
@@ -22,7 +28,9 @@ class _NiyetAppState extends State<NiyetApp> {
   @override
   void initState() {
     super.initState();
-    _router = createRouter();
+    _router = createRouter(
+      initialLocation: widget.showOnboarding ? '/onboarding' : '/',
+    );
   }
 
   @override
@@ -39,15 +47,17 @@ class _NiyetAppState extends State<NiyetApp> {
         themeMode: ThemeMode.system,
         routerConfig: _router,
         localizationsDelegates: const [
+          AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: const [
+          Locale('kk'),
           Locale('en'),
           Locale('ar'),
-          Locale('kk'),
         ],
+        locale: const Locale('kk'),
       ),
     );
   }

@@ -5,18 +5,25 @@ import '../../features/calendar/presentation/pages/calendar_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/niyet/presentation/pages/muhasaba_page.dart';
 import '../../features/niyet/presentation/pages/set_niyet_page.dart';
+import '../../features/onboarding/presentation/pages/onboarding_page.dart';
 import '../../features/settings/presentation/pages/settings_page.dart';
+import '../localization/localization_extension.dart';
 import 'router_names.dart';
 import 'router_paths.dart';
 
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> shellNavigatorKey = GlobalKey<NavigatorState>();
 
-GoRouter createRouter() {
+GoRouter createRouter({String initialLocation = RoutePaths.home}) {
   return GoRouter(
     navigatorKey: rootNavigatorKey,
-    initialLocation: RoutePaths.home,
+    initialLocation: initialLocation,
     routes: [
+      GoRoute(
+        path: RoutePaths.onboarding,
+        name: RouteNames.onboarding,
+        builder: (context, state) => const OnboardingPage(),
+      ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return ScaffoldWithNavBar(navigationShell: navigationShell);
@@ -87,21 +94,21 @@ class ScaffoldWithNavBar extends StatelessWidget {
             initialLocation: index == navigationShell.currentIndex,
           );
         },
-        destinations: const [
+        destinations: [
           NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home),
-            label: 'Home',
+            icon: const Icon(Icons.home_outlined),
+            selectedIcon: const Icon(Icons.home),
+            label: context.loc.home,
           ),
           NavigationDestination(
-            icon: Icon(Icons.calendar_today_outlined),
-            selectedIcon: Icon(Icons.calendar_today),
-            label: 'Calendar',
+            icon: const Icon(Icons.calendar_today_outlined),
+            selectedIcon: const Icon(Icons.calendar_today),
+            label: context.loc.calendar,
           ),
           NavigationDestination(
-            icon: Icon(Icons.settings_outlined),
-            selectedIcon: Icon(Icons.settings),
-            label: 'Settings',
+            icon: const Icon(Icons.settings_outlined),
+            selectedIcon: const Icon(Icons.settings),
+            label: context.loc.settings,
           ),
         ],
       ),
