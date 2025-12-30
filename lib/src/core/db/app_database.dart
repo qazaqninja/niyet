@@ -48,10 +48,10 @@ class AppDatabase extends _$AppDatabase {
         await m.createAll();
       },
       onUpgrade: (Migrator m, int from, int to) async {
-        // Destructive migration: drop all tables and recreate
-        // This is fine during development
+        // Migration v1 -> v2: Table renamed from 'niyyat' to 'niyetler'
         if (from < 2) {
-          await m.deleteTable('niyyat'); // Old table name
+          // Use DROP IF EXISTS to handle edge case where table doesn't exist
+          await customStatement('DROP TABLE IF EXISTS niyyat');
           await m.createAll();
         }
       },
