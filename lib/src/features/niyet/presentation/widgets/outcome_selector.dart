@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/theme/animations.dart';
 import '../../../../core/theme/colors.dart';
 import '../../domain/entities/niyet_outcome.dart';
 
@@ -67,7 +68,8 @@ class _OutcomeButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
+        duration: AppAnimations.standard,
+        curve: AppAnimations.curve,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         decoration: BoxDecoration(
           color: isSelected ? _color : _color.withValues(alpha: 0.1),

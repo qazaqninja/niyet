@@ -5,4 +5,5 @@ abstract class RouteNames {
   static const String settings = 'settings';
   static const String setNiyet = 'setNiyet';
   static const String muhasaba = 'muhasaba';
+  static const String niyetDetail = 'niyetDetail';
 }

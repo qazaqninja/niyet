@@ -163,4 +163,75 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get onboardingGetStarted => 'ابدأ';
+
+  @override
+  String get noIntentionsForDay => 'لا نوايا لهذا اليوم';
+
+  @override
+  String get saveAsTemplate => 'حفظ كقالب';
+
+  @override
+  String get templateSaved => 'تم حفظ القالب';
+
+  @override
+  String get templateIbadah1 => 'الإكثار من ذكر الله';
+
+  @override
+  String get templateIbadah2 => 'الصلاة في وقتها';
+
+  @override
+  String get templateAkhlaq1 => 'اللين مع الناس';
+
+  @override
+  String get templateAkhlaq2 => 'التحلي بالصبر';
+
+  @override
+  String get templateFamily1 => 'الإحسان إلى الوالدين';
+
+  @override
+  String get templateFamily2 => 'قضاء الوقت مع الأهل';
+
+  @override
+  String get templateCharity1 => 'إخفاء الصدقة';
+
+  @override
+  String get templateCharity2 => 'مساعدة أحد';
+
+  @override
+  String get templateWork1 => 'العمل بأمانة';
+
+  @override
+  String get templateWork2 => 'إتقان العمل';
+
+  @override
+  String get deleteNiyet => 'حذف النية';
+
+  @override
+  String get deleteNiyetConfirmation => 'هل تريد حذف هذه النية؟';
+
+  @override
+  String get delete => 'حذف';
+
+  @override
+  String get date => 'التاريخ';
+
+  @override
+  String get created => 'تم الإنشاء';
+
+  @override
+  String get outcome => 'النتيجة';
+
+  @override
+  String niyetCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count نية',
+      few: '$count نوايا',
+      two: 'نيتان',
+      one: 'نية واحدة',
+      zero: 'لا نوايا',
+    );
+    return '$_temp0';
+  }
 }

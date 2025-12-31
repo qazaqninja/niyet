@@ -5,9 +5,11 @@ import 'package:go_router/go_router.dart';
 
 import '../core/localization/generated/app_localizations.dart';
 import '../core/router/router.dart';
-import '../core/theme/theme.dart';
-import '../features/niyet/presentation/bloc/niyet_bloc.dart';
 import '../core/services/injectable/injectable_service.dart';
+import '../core/theme/animations.dart';
+import '../core/theme/theme_cubit.dart';
+import '../features/niyet/presentation/bloc/niyet_bloc.dart';
+import '../features/niyet/presentation/bloc/template_bloc.dart';
 import 'flavor_config.dart';
 
 class NiyetApp extends StatefulWidget {
@@ -37,27 +39,39 @@ class _NiyetAppState extends State<NiyetApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(
+          create: (_) => getIt<ThemeCubit>()..initialize(),
+        ),
         BlocProvider(create: (_) => getIt<NiyetBloc>()),
+        BlocProvider(
+          create: (_) => getIt<TemplateBloc>()..add(const TemplateLoadRequested()),
+        ),
       ],
-      child: MaterialApp.router(
-        title: FlavorConfig.instance.appTitle,
-        debugShowCheckedModeBanner: FlavorConfig.instance.isDev,
-        theme: AppTheme.lightTheme,
-        darkTheme: AppTheme.darkTheme,
-        themeMode: ThemeMode.system,
-        routerConfig: _router,
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [
-          Locale('kk'),
-          Locale('en'),
-          Locale('ar'),
-        ],
-        locale: const Locale('kk'),
+      child: BlocBuilder<ThemeCubit, ThemeState>(
+        builder: (context, themeState) {
+          return AnimatedTheme(
+            duration: AppAnimations.themeTransition,
+            data: themeState.theme,
+            child: MaterialApp.router(
+              title: FlavorConfig.instance.appTitle,
+              debugShowCheckedModeBanner: FlavorConfig.instance.isDev,
+              theme: themeState.theme,
+              routerConfig: _router,
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: const [
+                Locale('kk'),
+                Locale('en'),
+                Locale('ar'),
+              ],
+              locale: const Locale('kk'),
+            ),
+          );
+        },
       ),
     );
   }

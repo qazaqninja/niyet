@@ -3,7 +3,9 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/calendar/presentation/pages/calendar_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
+import '../../features/niyet/domain/entities/niyet.dart';
 import '../../features/niyet/presentation/pages/muhasaba_page.dart';
+import '../../features/niyet/presentation/pages/niyet_detail_page.dart';
 import '../../features/niyet/presentation/pages/set_niyet_page.dart';
 import '../../features/onboarding/presentation/pages/onboarding_page.dart';
 import '../../features/settings/presentation/pages/settings_page.dart';
@@ -69,6 +71,20 @@ GoRouter createRouter({String initialLocation = RoutePaths.home}) {
         name: RouteNames.muhasaba,
         parentNavigatorKey: rootNavigatorKey,
         builder: (context, state) => const MuhasabaPage(),
+      ),
+      GoRoute(
+        path: '${RoutePaths.niyetDetail}/:id',
+        name: RouteNames.niyetDetail,
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (context, state) {
+          final niyet = state.extra;
+          if (niyet is! Niyet) {
+            return const Scaffold(
+              body: Center(child: Text('Invalid niyet')),
+            );
+          }
+          return NiyetDetailPage(niyet: niyet);
+        },
       ),
     ],
   );

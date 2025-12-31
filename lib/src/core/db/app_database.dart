@@ -23,7 +23,18 @@ class Niyetler extends Table {
   Set<Column> get primaryKey => {id};
 }
 
-@DriftDatabase(tables: [Niyetler])
+/// User-created niyet templates
+class NiyetTemplates extends Table {
+  TextColumn get id => text()();
+  TextColumn get templateText => text()();
+  IntColumn get category => integer()();
+  DateTimeColumn get createdAt => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+@DriftDatabase(tables: [Niyetler, NiyetTemplates])
 class AppDatabase extends _$AppDatabase {
   AppDatabase._() : super(_openConnection());
 
@@ -39,7 +50,7 @@ class AppDatabase extends _$AppDatabase {
   }
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration {
@@ -53,6 +64,10 @@ class AppDatabase extends _$AppDatabase {
           // Use DROP IF EXISTS to handle edge case where table doesn't exist
           await customStatement('DROP TABLE IF EXISTS niyyat');
           await m.createAll();
+        }
+        // Migration v2 -> v3: Add niyet_templates table
+        if (from < 3) {
+          await m.createTable(niyetTemplates);
         }
       },
     );
@@ -97,6 +112,17 @@ class AppDatabase extends _$AppDatabase {
               t.date.isSmallerThanValue(endOfDay)))
         .watch();
   }
+
+  // Template CRUD operations
+  Future<List<NiyetTemplate>> getTemplates() => select(niyetTemplates).get();
+
+  Stream<List<NiyetTemplate>> watchTemplates() => select(niyetTemplates).watch();
+
+  Future<int> insertTemplate(NiyetTemplatesCompanion entry) =>
+      into(niyetTemplates).insert(entry);
+
+  Future<int> deleteTemplate(String id) =>
+      (delete(niyetTemplates)..where((t) => t.id.equals(id))).go();
 }
 
 LazyDatabase _openConnection() {

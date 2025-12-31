@@ -6,6 +6,11 @@ abstract class PreferencesService {
   Future<void> setOnboardingCompleted();
   Future<String> getLocale();
   Future<void> setLocale(String locale);
+
+  // Location caching for sunrise/sunset calculation
+  Future<double?> getCachedLatitude();
+  Future<double?> getCachedLongitude();
+  Future<void> cacheLocation(double latitude, double longitude);
 }
 
 @LazySingleton(as: PreferencesService)
@@ -16,6 +21,8 @@ class PreferencesServiceImpl implements PreferencesService {
 
   static const _keyOnboardingCompleted = 'onboarding_completed';
   static const _keyLocale = 'locale';
+  static const _keyLatitude = 'cached_latitude';
+  static const _keyLongitude = 'cached_longitude';
 
   @override
   Future<bool> hasCompletedOnboarding() async {
@@ -35,5 +42,21 @@ class PreferencesServiceImpl implements PreferencesService {
   @override
   Future<void> setLocale(String locale) async {
     await _prefs.setString(_keyLocale, locale);
+  }
+
+  @override
+  Future<double?> getCachedLatitude() async {
+    return _prefs.getDouble(_keyLatitude);
+  }
+
+  @override
+  Future<double?> getCachedLongitude() async {
+    return _prefs.getDouble(_keyLongitude);
+  }
+
+  @override
+  Future<void> cacheLocation(double latitude, double longitude) async {
+    await _prefs.setDouble(_keyLatitude, latitude);
+    await _prefs.setDouble(_keyLongitude, longitude);
   }
 }

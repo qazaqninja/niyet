@@ -164,4 +164,73 @@ class AppLocalizationsKk extends AppLocalizations {
 
   @override
   String get onboardingGetStarted => 'Бастау';
+
+  @override
+  String get noIntentionsForDay => 'Бұл күнге ниет жоқ';
+
+  @override
+  String get saveAsTemplate => 'Үлгі ретінде сақтау';
+
+  @override
+  String get templateSaved => 'Үлгі сақталды';
+
+  @override
+  String get templateIbadah1 => 'Алланы еске алуды көбейту';
+
+  @override
+  String get templateIbadah2 => 'Намазды уақытында оқу';
+
+  @override
+  String get templateAkhlaq1 => 'Адамдарға жұмсақ болу';
+
+  @override
+  String get templateAkhlaq2 => 'Сабырлы болу';
+
+  @override
+  String get templateFamily1 => 'Ата-анаға жақсылық жасау';
+
+  @override
+  String get templateFamily2 => 'Отбасымен уақыт өткізу';
+
+  @override
+  String get templateCharity1 => 'Садақаны жасырын беру';
+
+  @override
+  String get templateCharity2 => 'Біреуге көмектесу';
+
+  @override
+  String get templateWork1 => 'Адал еңбек ету';
+
+  @override
+  String get templateWork2 => 'Жұмысты жақсы істеу';
+
+  @override
+  String get deleteNiyet => 'Ниетті өшіру';
+
+  @override
+  String get deleteNiyetConfirmation => 'Бұл ниетті өшіргіңіз келе ме?';
+
+  @override
+  String get delete => 'Өшіру';
+
+  @override
+  String get date => 'Күні';
+
+  @override
+  String get created => 'Құрылған';
+
+  @override
+  String get outcome => 'Нәтиже';
+
+  @override
+  String niyetCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ниет',
+      one: '1 ниет',
+      zero: 'Ниет жоқ',
+    );
+    return '$_temp0';
+  }
 }

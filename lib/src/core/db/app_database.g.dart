@@ -567,15 +567,334 @@ class NiyetlerCompanion extends UpdateCompanion<NiyetlerData> {
   }
 }
 
+class $NiyetTemplatesTable extends NiyetTemplates
+    with TableInfo<$NiyetTemplatesTable, NiyetTemplate> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $NiyetTemplatesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _templateTextMeta = const VerificationMeta(
+    'templateText',
+  );
+  @override
+  late final GeneratedColumn<String> templateText = GeneratedColumn<String>(
+    'template_text',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _categoryMeta = const VerificationMeta(
+    'category',
+  );
+  @override
+  late final GeneratedColumn<int> category = GeneratedColumn<int>(
+    'category',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, templateText, category, createdAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'niyet_templates';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<NiyetTemplate> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('template_text')) {
+      context.handle(
+        _templateTextMeta,
+        templateText.isAcceptableOrUnknown(
+          data['template_text']!,
+          _templateTextMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_templateTextMeta);
+    }
+    if (data.containsKey('category')) {
+      context.handle(
+        _categoryMeta,
+        category.isAcceptableOrUnknown(data['category']!, _categoryMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_categoryMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  NiyetTemplate map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return NiyetTemplate(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      templateText: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}template_text'],
+      )!,
+      category: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}category'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $NiyetTemplatesTable createAlias(String alias) {
+    return $NiyetTemplatesTable(attachedDatabase, alias);
+  }
+}
+
+class NiyetTemplate extends DataClass implements Insertable<NiyetTemplate> {
+  final String id;
+  final String templateText;
+  final int category;
+  final DateTime createdAt;
+  const NiyetTemplate({
+    required this.id,
+    required this.templateText,
+    required this.category,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['template_text'] = Variable<String>(templateText);
+    map['category'] = Variable<int>(category);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  NiyetTemplatesCompanion toCompanion(bool nullToAbsent) {
+    return NiyetTemplatesCompanion(
+      id: Value(id),
+      templateText: Value(templateText),
+      category: Value(category),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory NiyetTemplate.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return NiyetTemplate(
+      id: serializer.fromJson<String>(json['id']),
+      templateText: serializer.fromJson<String>(json['templateText']),
+      category: serializer.fromJson<int>(json['category']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'templateText': serializer.toJson<String>(templateText),
+      'category': serializer.toJson<int>(category),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  NiyetTemplate copyWith({
+    String? id,
+    String? templateText,
+    int? category,
+    DateTime? createdAt,
+  }) => NiyetTemplate(
+    id: id ?? this.id,
+    templateText: templateText ?? this.templateText,
+    category: category ?? this.category,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  NiyetTemplate copyWithCompanion(NiyetTemplatesCompanion data) {
+    return NiyetTemplate(
+      id: data.id.present ? data.id.value : this.id,
+      templateText: data.templateText.present
+          ? data.templateText.value
+          : this.templateText,
+      category: data.category.present ? data.category.value : this.category,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NiyetTemplate(')
+          ..write('id: $id, ')
+          ..write('templateText: $templateText, ')
+          ..write('category: $category, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, templateText, category, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is NiyetTemplate &&
+          other.id == this.id &&
+          other.templateText == this.templateText &&
+          other.category == this.category &&
+          other.createdAt == this.createdAt);
+}
+
+class NiyetTemplatesCompanion extends UpdateCompanion<NiyetTemplate> {
+  final Value<String> id;
+  final Value<String> templateText;
+  final Value<int> category;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const NiyetTemplatesCompanion({
+    this.id = const Value.absent(),
+    this.templateText = const Value.absent(),
+    this.category = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  NiyetTemplatesCompanion.insert({
+    required String id,
+    required String templateText,
+    required int category,
+    required DateTime createdAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       templateText = Value(templateText),
+       category = Value(category),
+       createdAt = Value(createdAt);
+  static Insertable<NiyetTemplate> custom({
+    Expression<String>? id,
+    Expression<String>? templateText,
+    Expression<int>? category,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (templateText != null) 'template_text': templateText,
+      if (category != null) 'category': category,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  NiyetTemplatesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? templateText,
+    Value<int>? category,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return NiyetTemplatesCompanion(
+      id: id ?? this.id,
+      templateText: templateText ?? this.templateText,
+      category: category ?? this.category,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (templateText.present) {
+      map['template_text'] = Variable<String>(templateText.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<int>(category.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NiyetTemplatesCompanion(')
+          ..write('id: $id, ')
+          ..write('templateText: $templateText, ')
+          ..write('category: $category, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $NiyetlerTable niyetler = $NiyetlerTable(this);
+  late final $NiyetTemplatesTable niyetTemplates = $NiyetTemplatesTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [niyetler];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+    niyetler,
+    niyetTemplates,
+  ];
 }
 
 typedef $$NiyetlerTableCreateCompanionBuilder =
@@ -856,10 +1175,197 @@ typedef $$NiyetlerTableProcessedTableManager =
       NiyetlerData,
       PrefetchHooks Function()
     >;
+typedef $$NiyetTemplatesTableCreateCompanionBuilder =
+    NiyetTemplatesCompanion Function({
+      required String id,
+      required String templateText,
+      required int category,
+      required DateTime createdAt,
+      Value<int> rowid,
+    });
+typedef $$NiyetTemplatesTableUpdateCompanionBuilder =
+    NiyetTemplatesCompanion Function({
+      Value<String> id,
+      Value<String> templateText,
+      Value<int> category,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+class $$NiyetTemplatesTableFilterComposer
+    extends Composer<_$AppDatabase, $NiyetTemplatesTable> {
+  $$NiyetTemplatesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get templateText => $composableBuilder(
+    column: $table.templateText,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$NiyetTemplatesTableOrderingComposer
+    extends Composer<_$AppDatabase, $NiyetTemplatesTable> {
+  $$NiyetTemplatesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get templateText => $composableBuilder(
+    column: $table.templateText,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$NiyetTemplatesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $NiyetTemplatesTable> {
+  $$NiyetTemplatesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get templateText => $composableBuilder(
+    column: $table.templateText,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get category =>
+      $composableBuilder(column: $table.category, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+}
+
+class $$NiyetTemplatesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $NiyetTemplatesTable,
+          NiyetTemplate,
+          $$NiyetTemplatesTableFilterComposer,
+          $$NiyetTemplatesTableOrderingComposer,
+          $$NiyetTemplatesTableAnnotationComposer,
+          $$NiyetTemplatesTableCreateCompanionBuilder,
+          $$NiyetTemplatesTableUpdateCompanionBuilder,
+          (
+            NiyetTemplate,
+            BaseReferences<_$AppDatabase, $NiyetTemplatesTable, NiyetTemplate>,
+          ),
+          NiyetTemplate,
+          PrefetchHooks Function()
+        > {
+  $$NiyetTemplatesTableTableManager(
+    _$AppDatabase db,
+    $NiyetTemplatesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$NiyetTemplatesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$NiyetTemplatesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$NiyetTemplatesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> templateText = const Value.absent(),
+                Value<int> category = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => NiyetTemplatesCompanion(
+                id: id,
+                templateText: templateText,
+                category: category,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String templateText,
+                required int category,
+                required DateTime createdAt,
+                Value<int> rowid = const Value.absent(),
+              }) => NiyetTemplatesCompanion.insert(
+                id: id,
+                templateText: templateText,
+                category: category,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$NiyetTemplatesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $NiyetTemplatesTable,
+      NiyetTemplate,
+      $$NiyetTemplatesTableFilterComposer,
+      $$NiyetTemplatesTableOrderingComposer,
+      $$NiyetTemplatesTableAnnotationComposer,
+      $$NiyetTemplatesTableCreateCompanionBuilder,
+      $$NiyetTemplatesTableUpdateCompanionBuilder,
+      (
+        NiyetTemplate,
+        BaseReferences<_$AppDatabase, $NiyetTemplatesTable, NiyetTemplate>,
+      ),
+      NiyetTemplate,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
   $$NiyetlerTableTableManager get niyetler =>
       $$NiyetlerTableTableManager(_db, _db.niyetler);
+  $$NiyetTemplatesTableTableManager get niyetTemplates =>
+      $$NiyetTemplatesTableTableManager(_db, _db.niyetTemplates);
 }

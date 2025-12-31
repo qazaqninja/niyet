@@ -164,4 +164,74 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingGetStarted => 'Get Started';
+
+  @override
+  String get noIntentionsForDay => 'No intentions for this day';
+
+  @override
+  String get saveAsTemplate => 'Save as template';
+
+  @override
+  String get templateSaved => 'Template saved';
+
+  @override
+  String get templateIbadah1 => 'Increase remembrance of Allah';
+
+  @override
+  String get templateIbadah2 => 'Pray on time';
+
+  @override
+  String get templateAkhlaq1 => 'Be gentle with people';
+
+  @override
+  String get templateAkhlaq2 => 'Be patient';
+
+  @override
+  String get templateFamily1 => 'Be good to parents';
+
+  @override
+  String get templateFamily2 => 'Spend time with family';
+
+  @override
+  String get templateCharity1 => 'Give charity secretly';
+
+  @override
+  String get templateCharity2 => 'Help someone';
+
+  @override
+  String get templateWork1 => 'Work honestly';
+
+  @override
+  String get templateWork2 => 'Do work excellently';
+
+  @override
+  String get deleteNiyet => 'Delete intention';
+
+  @override
+  String get deleteNiyetConfirmation =>
+      'Are you sure you want to delete this intention?';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get date => 'Date';
+
+  @override
+  String get created => 'Created';
+
+  @override
+  String get outcome => 'Outcome';
+
+  @override
+  String niyetCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count intentions',
+      one: '1 intention',
+      zero: 'No intentions',
+    );
+    return '$_temp0';
+  }
 }

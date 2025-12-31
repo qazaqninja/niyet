@@ -50,5 +50,32 @@
   "onboardingGetStartedBody": "May your intentions be sincere and your efforts blessed.",
   "onboardingSkip": "Skip",
   "onboardingNext": "Next",
-  "onboardingGetStarted": "Get Started"
+  "onboardingGetStarted": "Get Started",
+  "noIntentionsForDay": "No intentions for this day",
+  "saveAsTemplate": "Save as template",
+  "templateSaved": "Template saved",
+  "templateIbadah1": "Increase remembrance of Allah",
+  "templateIbadah2": "Pray on time",
+  "templateAkhlaq1": "Be gentle with people",
+  "templateAkhlaq2": "Be patient",
+  "templateFamily1": "Be good to parents",
+  "templateFamily2": "Spend time with family",
+  "templateCharity1": "Give charity secretly",
+  "templateCharity2": "Help someone",
+  "templateWork1": "Work honestly",
+  "templateWork2": "Do work excellently",
+  "deleteNiyet": "Delete intention",
+  "deleteNiyetConfirmation": "Are you sure you want to delete this intention?",
+  "delete": "Delete",
+  "date": "Date",
+  "created": "Created",
+  "outcome": "Outcome",
+  "niyetCount": "{count, plural, =0{No intentions} =1{1 intention} other{{count} intentions}}",
+  "@niyetCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

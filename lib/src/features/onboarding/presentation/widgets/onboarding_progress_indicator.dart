@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/theme/animations.dart';
+
 class OnboardingProgressIndicator extends StatelessWidget {
   const OnboardingProgressIndicator({
     required this.currentPage,
@@ -20,7 +22,8 @@ class OnboardingProgressIndicator extends StatelessWidget {
       children: List.generate(totalPages, (index) {
         final isActive = index == currentPage;
         return AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
+          duration: AppAnimations.standard,
+          curve: AppAnimations.curve,
           margin: const EdgeInsets.symmetric(horizontal: 4),
           width: isActive ? 24 : 8,
           height: 8,

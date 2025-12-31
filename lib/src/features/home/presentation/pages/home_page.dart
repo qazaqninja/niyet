@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/localization/localization_extension.dart';
 import '../../../../core/router/router_paths.dart';
+import '../../../../core/utils/dialogs.dart';
 import '../../../niyet/presentation/bloc/niyet_bloc.dart';
 import '../../../niyet/presentation/widgets/niyet_card.dart';
 
@@ -135,11 +136,34 @@ class _HomePageState extends State<HomePage> {
                         final niyet = state.niyetler[index];
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 12),
-                          child: NiyetCard(
-                            niyet: niyet,
-                            onTap: niyet.isReflected
-                                ? null
-                                : () => context.push(RoutePaths.muhasaba),
+                          child: Dismissible(
+                            key: Key(niyet.id),
+                            direction: DismissDirection.endToStart,
+                            background: Container(
+                              alignment: Alignment.centerRight,
+                              padding: const EdgeInsets.only(right: 20),
+                              decoration: BoxDecoration(
+                                color: colorScheme.error,
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: const Icon(
+                                Icons.delete_outline,
+                                color: Colors.white,
+                              ),
+                            ),
+                            confirmDismiss: (_) => showDeleteNiyetDialog(context),
+                            onDismissed: (_) {
+                              context.read<NiyetBloc>().add(
+                                    NiyetDeleted(id: niyet.id),
+                                  );
+                            },
+                            child: NiyetCard(
+                              niyet: niyet,
+                              onTap: () => context.push(
+                                '${RoutePaths.niyetDetail}/${niyet.id}',
+                                extra: niyet,
+                              ),
+                            ),
                           ),
                         );
                       },
