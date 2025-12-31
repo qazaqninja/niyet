@@ -405,6 +405,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Get Started'**
   String get onboardingGetStarted;
+
+  /// No description provided for @noIntentionsForDay.
+  ///
+  /// In en, this message translates to:
+  /// **'No intentions for this day'**
+  String get noIntentionsForDay;
+
+  /// No description provided for @saveAsTemplate.
+  ///
+  /// In en, this message translates to:
+  /// **'Save as template'**
+  String get saveAsTemplate;
+
+  /// No description provided for @templateSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Template saved'**
+  String get templateSaved;
+
+  /// No description provided for @templateIbadah1.
+  ///
+  /// In en, this message translates to:
+  /// **'Increase remembrance of Allah'**
+  String get templateIbadah1;
+
+  /// No description provided for @templateIbadah2.
+  ///
+  /// In en, this message translates to:
+  /// **'Pray on time'**
+  String get templateIbadah2;
+
+  /// No description provided for @templateAkhlaq1.
+  ///
+  /// In en, this message translates to:
+  /// **'Be gentle with people'**
+  String get templateAkhlaq1;
+
+  /// No description provided for @templateAkhlaq2.
+  ///
+  /// In en, this message translates to:
+  /// **'Be patient'**
+  String get templateAkhlaq2;
+
+  /// No description provided for @templateFamily1.
+  ///
+  /// In en, this message translates to:
+  /// **'Be good to parents'**
+  String get templateFamily1;
+
+  /// No description provided for @templateFamily2.
+  ///
+  /// In en, this message translates to:
+  /// **'Spend time with family'**
+  String get templateFamily2;
+
+  /// No description provided for @templateCharity1.
+  ///
+  /// In en, this message translates to:
+  /// **'Give charity secretly'**
+  String get templateCharity1;
+
+  /// No description provided for @templateCharity2.
+  ///
+  /// In en, this message translates to:
+  /// **'Help someone'**
+  String get templateCharity2;
+
+  /// No description provided for @templateWork1.
+  ///
+  /// In en, this message translates to:
+  /// **'Work honestly'**
+  String get templateWork1;
+
+  /// No description provided for @templateWork2.
+  ///
+  /// In en, this message translates to:
+  /// **'Do work excellently'**
+  String get templateWork2;
+
+  /// No description provided for @deleteNiyet.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete intention'**
+  String get deleteNiyet;
+
+  /// No description provided for @deleteNiyetConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this intention?'**
+  String get deleteNiyetConfirmation;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
 }
 
 class _AppLocalizationsDelegate

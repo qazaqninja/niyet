@@ -42,6 +42,11 @@ dependencies:
   # UI
   cupertino_icons: ^1.0.8
 
+  # Dynamic Theme
+  geolocator: ^14.0.2       # Device location for sunrise/sunset
+  daylight: ^3.1.0          # Sunrise/sunset calculation (offline)
+  hijri_calendar: ^1.0.7    # Hijri calendar for Ramadan detection
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

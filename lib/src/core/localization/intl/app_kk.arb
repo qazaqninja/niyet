@@ -50,5 +50,21 @@
   "onboardingGetStartedBody": "Ниеттеріңіз ықыласты, еңбектеріңіз берекелі болсын.",
   "onboardingSkip": "Өткізу",
   "onboardingNext": "Келесі",
-  "onboardingGetStarted": "Бастау"
+  "onboardingGetStarted": "Бастау",
+  "saveAsTemplate": "Үлгі ретінде сақтау",
+  "templateSaved": "Үлгі сақталды",
+  "templateIbadah1": "Алланы еске алуды көбейту",
+  "templateIbadah2": "Намазды уақытында оқу",
+  "templateAkhlaq1": "Адамдарға жұмсақ болу",
+  "templateAkhlaq2": "Сабырлы болу",
+  "templateFamily1": "Ата-анаға жақсылық жасау",
+  "templateFamily2": "Отбасымен уақыт өткізу",
+  "templateCharity1": "Садақаны жасырын беру",
+  "templateCharity2": "Біреуге көмектесу",
+  "templateWork1": "Адал еңбек ету",
+  "templateWork2": "Жұмысты жақсы істеу",
+  "noIntentionsForDay": "Бұл күнге ниет жоқ",
+  "deleteNiyet": "Ниетті өшіру",
+  "deleteNiyetConfirmation": "Бұл ниетті өшіргіңіз келе ме?",
+  "delete": "Өшіру"
 }

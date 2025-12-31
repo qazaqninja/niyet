@@ -50,5 +50,21 @@
   "onboardingGetStartedBody": "جعل الله نواياك خالصة وجهودك مباركة.",
   "onboardingSkip": "تخطي",
   "onboardingNext": "التالي",
-  "onboardingGetStarted": "ابدأ"
+  "onboardingGetStarted": "ابدأ",
+  "noIntentionsForDay": "لا نوايا لهذا اليوم",
+  "saveAsTemplate": "حفظ كقالب",
+  "templateSaved": "تم حفظ القالب",
+  "templateIbadah1": "الإكثار من ذكر الله",
+  "templateIbadah2": "الصلاة في وقتها",
+  "templateAkhlaq1": "اللين مع الناس",
+  "templateAkhlaq2": "التحلي بالصبر",
+  "templateFamily1": "الإحسان إلى الوالدين",
+  "templateFamily2": "قضاء الوقت مع الأهل",
+  "templateCharity1": "إخفاء الصدقة",
+  "templateCharity2": "مساعدة أحد",
+  "templateWork1": "العمل بأمانة",
+  "templateWork2": "إتقان العمل",
+  "deleteNiyet": "حذف النية",
+  "deleteNiyetConfirmation": "هل تريد حذف هذه النية؟",
+  "delete": "حذف"
 }

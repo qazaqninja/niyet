@@ -26,6 +26,30 @@ class _HomePageState extends State<HomePage> {
     return hour >= 5 && hour < 17;
   }
 
+  Future<bool> _confirmDelete(BuildContext context) async {
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(context.loc.deleteNiyet),
+        content: Text(context.loc.deleteNiyetConfirmation),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text(context.loc.cancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            style: TextButton.styleFrom(
+              foregroundColor: Theme.of(context).colorScheme.error,
+            ),
+            child: Text(context.loc.delete),
+          ),
+        ],
+      ),
+    );
+    return result ?? false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -135,11 +159,34 @@ class _HomePageState extends State<HomePage> {
                         final niyet = state.niyetler[index];
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 12),
-                          child: NiyetCard(
-                            niyet: niyet,
-                            onTap: niyet.isReflected
-                                ? null
-                                : () => context.push(RoutePaths.muhasaba),
+                          child: Dismissible(
+                            key: Key(niyet.id),
+                            direction: DismissDirection.endToStart,
+                            background: Container(
+                              alignment: Alignment.centerRight,
+                              padding: const EdgeInsets.only(right: 20),
+                              decoration: BoxDecoration(
+                                color: colorScheme.error,
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: const Icon(
+                                Icons.delete_outline,
+                                color: Colors.white,
+                              ),
+                            ),
+                            confirmDismiss: (_) => _confirmDelete(context),
+                            onDismissed: (_) {
+                              context.read<NiyetBloc>().add(
+                                    NiyetDeleted(id: niyet.id),
+                                  );
+                            },
+                            child: NiyetCard(
+                              niyet: niyet,
+                              onTap: () => context.push(
+                                '${RoutePaths.niyetDetail}/${niyet.id}',
+                                extra: niyet,
+                              ),
+                            ),
                           ),
                         );
                       },

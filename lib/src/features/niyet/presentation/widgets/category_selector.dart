@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/theme/animations.dart';
 import '../../../../core/theme/colors.dart';
 import '../../domain/entities/niyet_category.dart';
 
@@ -61,7 +62,8 @@ class _CategoryChip extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
+        duration: AppAnimations.standard,
+        curve: AppAnimations.curve,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: BoxDecoration(
           color: isSelected ? _color : _color.withValues(alpha: 0.1),

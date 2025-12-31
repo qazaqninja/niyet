@@ -156,4 +156,53 @@ class AppTextTheme {
       color: AppColors.textSecondaryDark,
     ),
   );
+
+  /// Evening theme - warm white text on dark warm background
+  static TextTheme get eveningTextTheme => TextTheme(
+    displayLarge: lightTextTheme.displayLarge?.copyWith(
+      color: AppColors.eveningTextPrimary,
+    ),
+    displayMedium: lightTextTheme.displayMedium?.copyWith(
+      color: AppColors.eveningTextPrimary,
+    ),
+    displaySmall: lightTextTheme.displaySmall?.copyWith(
+      color: AppColors.eveningTextPrimary,
+    ),
+    headlineLarge: lightTextTheme.headlineLarge?.copyWith(
+      color: AppColors.eveningTextPrimary,
+    ),
+    headlineMedium: lightTextTheme.headlineMedium?.copyWith(
+      color: AppColors.eveningTextPrimary,
+    ),
+    headlineSmall: lightTextTheme.headlineSmall?.copyWith(
+      color: AppColors.eveningTextPrimary,
+    ),
+    titleLarge: lightTextTheme.titleLarge?.copyWith(
+      color: AppColors.eveningTextPrimary,
+    ),
+    titleMedium: lightTextTheme.titleMedium?.copyWith(
+      color: AppColors.eveningTextPrimary,
+    ),
+    titleSmall: lightTextTheme.titleSmall?.copyWith(
+      color: AppColors.eveningTextPrimary,
+    ),
+    bodyLarge: lightTextTheme.bodyLarge?.copyWith(
+      color: AppColors.eveningTextPrimary,
+    ),
+    bodyMedium: lightTextTheme.bodyMedium?.copyWith(
+      color: AppColors.eveningTextPrimary,
+    ),
+    bodySmall: lightTextTheme.bodySmall?.copyWith(
+      color: AppColors.eveningTextSecondary,
+    ),
+    labelLarge: lightTextTheme.labelLarge?.copyWith(
+      color: AppColors.eveningTextPrimary,
+    ),
+    labelMedium: lightTextTheme.labelMedium?.copyWith(
+      color: AppColors.eveningTextPrimary,
+    ),
+    labelSmall: lightTextTheme.labelSmall?.copyWith(
+      color: AppColors.eveningTextSecondary,
+    ),
+  );
 }

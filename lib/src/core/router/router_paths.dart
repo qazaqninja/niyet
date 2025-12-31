@@ -5,4 +5,5 @@ abstract class RoutePaths {
   static const String settings = '/settings';
   static const String setNiyet = '/set-niyet';
   static const String muhasaba = '/muhasaba';
+  static const String niyetDetail = '/niyet';
 }

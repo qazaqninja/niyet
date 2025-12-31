@@ -4,8 +4,11 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/localization/localization_extension.dart';
 import '../../domain/entities/niyet_category.dart';
+import '../../domain/entities/niyet_template.dart';
 import '../bloc/niyet_bloc.dart';
+import '../bloc/template_bloc.dart';
 import '../widgets/category_selector.dart';
+import '../widgets/template_chips.dart';
 
 class SetNiyetPage extends StatefulWidget {
   const SetNiyetPage({super.key});
@@ -18,11 +21,57 @@ class _SetNiyetPageState extends State<SetNiyetPage> {
   final _textController = TextEditingController();
   NiyetCategory _selectedCategory = NiyetCategory.ibadah;
   bool _forAllah = true;
+  bool _showTemplates = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _textController.addListener(_onTextChanged);
+  }
 
   @override
   void dispose() {
+    _textController.removeListener(_onTextChanged);
     _textController.dispose();
     super.dispose();
+  }
+
+  void _onTextChanged() {
+    final isEmpty = _textController.text.isEmpty;
+    if (_showTemplates != isEmpty) {
+      setState(() => _showTemplates = isEmpty);
+    }
+  }
+
+  void _onTemplateSelected(NiyetTemplate template) {
+    _textController.text = template.text;
+    _textController.selection = TextSelection(
+      baseOffset: 0,
+      extentOffset: template.text.length,
+    );
+    setState(() {
+      _selectedCategory = template.category;
+      _showTemplates = false;
+    });
+  }
+
+  void _saveAsTemplate() {
+    final text = _textController.text.trim();
+    if (text.isEmpty) return;
+
+    context.read<TemplateBloc>().add(
+          TemplateCreated(
+            text: text,
+            category: _selectedCategory,
+          ),
+        );
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(context.loc.templateSaved),
+        duration: const Duration(seconds: 2),
+      ),
+    );
   }
 
   void _save() {
@@ -50,6 +99,11 @@ class _SetNiyetPageState extends State<SetNiyetPage> {
         appBar: AppBar(
           title: Text(context.loc.setNiyet),
           actions: [
+            IconButton(
+              onPressed: _saveAsTemplate,
+              icon: const Icon(Icons.bookmark_add_outlined),
+              tooltip: context.loc.saveAsTemplate,
+            ),
             TextButton(
               onPressed: _save,
               child: Text(context.loc.save),
@@ -102,7 +156,19 @@ class _SetNiyetPageState extends State<SetNiyetPage> {
                   hintText: context.loc.intentionPlaceholder,
                 ),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 12),
+
+              // Template chips
+              BlocBuilder<TemplateBloc, TemplateState>(
+                builder: (context, state) {
+                  return TemplateChips(
+                    userTemplates: state.userTemplates,
+                    onTemplateSelected: _onTemplateSelected,
+                    visible: _showTemplates,
+                  );
+                },
+              ),
+              const SizedBox(height: 20),
 
               // Category selector
               Text(
