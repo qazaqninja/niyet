@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/calendar/presentation/pages/calendar_page.dart';
+import 'page_transitions.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/niyet/domain/entities/niyet.dart';
 import '../../features/niyet/presentation/pages/muhasaba_page.dart';
@@ -64,13 +65,19 @@ GoRouter createRouter({String initialLocation = RoutePaths.home}) {
         path: RoutePaths.setNiyet,
         name: RouteNames.setNiyet,
         parentNavigatorKey: rootNavigatorKey,
-        builder: (context, state) => const SetNiyetPage(),
+        pageBuilder: (context, state) => SlideUpPageTransition(
+          key: state.pageKey,
+          child: const SetNiyetPage(),
+        ),
       ),
       GoRoute(
         path: RoutePaths.muhasaba,
         name: RouteNames.muhasaba,
         parentNavigatorKey: rootNavigatorKey,
-        builder: (context, state) => const MuhasabaPage(),
+        pageBuilder: (context, state) => SlideUpPageTransition(
+          key: state.pageKey,
+          child: const MuhasabaPage(),
+        ),
       ),
       GoRoute(
         path: '${RoutePaths.niyetDetail}/:id',

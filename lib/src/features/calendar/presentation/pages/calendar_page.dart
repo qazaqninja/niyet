@@ -93,18 +93,25 @@ class _CalendarViewState extends State<_CalendarView> {
     // Base month is the month when the widget was first built
     final baseMonth = DateTime(DateTime.now().year, DateTime.now().month, 1);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(context.loc.calendar),
-        centerTitle: false,
-      ),
-      body: BlocConsumer<CalendarBloc, CalendarState>(
-        listenWhen: (previous, current) =>
-            previous.selectedDate != current.selectedDate &&
-            current.selectedDate != null,
-        listener: (context, state) {
-          _showDayBottomSheet(context, state);
-        },
+    return BlocListener<NiyetBloc, NiyetState>(
+      // Only refresh when niyet count changes (add/delete)
+      listenWhen: (previous, current) =>
+          previous.niyetler.length != current.niyetler.length,
+      listener: (context, niyetState) {
+        context.read<CalendarBloc>().add(const CalendarMonthLoaded());
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(context.loc.calendar),
+          centerTitle: false,
+        ),
+        body: BlocConsumer<CalendarBloc, CalendarState>(
+          listenWhen: (previous, current) =>
+              previous.selectedDate != current.selectedDate &&
+              current.selectedDate != null,
+          listener: (context, state) {
+            _showDayBottomSheet(context, state);
+          },
         builder: (context, state) {
           return Column(
             children: [
@@ -157,6 +164,7 @@ class _CalendarViewState extends State<_CalendarView> {
             ],
           );
         },
+        ),
       ),
     );
   }
@@ -165,20 +173,16 @@ class _CalendarViewState extends State<_CalendarView> {
     final date = state.selectedDate!;
     final niyetler = state.getNiyetlerForDate(date);
 
-    showModalBottomSheet<void>(
+    showDayNiyetlerSheet(
       context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (_) => DayNiyetlerBottomSheet(
-        date: date,
-        niyetler: niyetler,
-        onDelete: (id) {
-          context.read<NiyetBloc>().add(NiyetDeleted(id: id));
-          // Refresh calendar to update dots
-          context.read<CalendarBloc>().add(const CalendarMonthLoaded());
-        },
-      ),
+      date: date,
+      niyetler: niyetler,
+      onDelete: (id) {
+        context.read<NiyetBloc>().add(NiyetDeleted(id: id));
+        context.read<CalendarBloc>().add(const CalendarMonthLoaded());
+      },
     ).then((_) {
+      // Deselect day after dialog closes
       if (context.mounted) {
         context.read<CalendarBloc>().add(const CalendarDayDeselected());
       }

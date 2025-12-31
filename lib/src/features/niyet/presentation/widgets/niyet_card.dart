@@ -9,10 +9,16 @@ import '../../domain/entities/niyet_category.dart';
 import '../../domain/entities/niyet_outcome.dart';
 
 class NiyetCard extends StatelessWidget {
-  const NiyetCard({required this.niyet, this.onTap, super.key});
+  const NiyetCard({
+    required this.niyet,
+    this.onTap,
+    this.enableHero = true,
+    super.key,
+  });
 
   final Niyet niyet;
   final VoidCallback? onTap;
+  final bool enableHero;
 
   bool _isToday(DateTime date) {
     final now = DateTime.now();
@@ -21,67 +27,77 @@ class NiyetCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    // The Card content - must match structure in NiyetDetailPage for Hero
+    Widget card = Card(
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(16),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  _CategoryChip(category: niyet.category),
+                  const Spacer(),
+                  if (niyet.forAllah)
+                    Icon(
+                      Icons.favorite,
+                      size: 16,
+                      color: AppColors.accent.withValues(alpha: 0.7),
+                    ),
+                  if (niyet.outcome != null) ...[
+                    const SizedBox(width: 8),
+                    _OutcomeIndicator(outcome: niyet.outcome!),
+                  ],
+                ],
+              ),
+              const SizedBox(height: 12),
+              Text(niyet.text, style: theme.textTheme.bodyLarge),
+              if (niyet.reflection != null) ...[
+                const SizedBox(height: 8),
+                Text(
+                  niyet.reflection!,
+                  style: theme.textTheme.bodySmall?.copyWith(fontStyle: FontStyle.italic),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+
+    // Wrap in Hero when enabled
+    if (enableHero) {
+      card = Hero(
+        transitionOnUserGestures: true,
+        tag: 'niyet-${niyet.id}',
+        child: card,
+      );
+    }
+
+    // Ramadan glow effect wrapper (outside Hero for cleaner animation)
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, themeState) {
-        // Show Ramadan glow on today's cards during Ramadan
         final showRamadanGlow = themeState.isRamadan && _isToday(niyet.date);
+
+        if (!showRamadanGlow) return card;
 
         return AnimatedContainer(
           duration: AppAnimations.standard,
           curve: AppAnimations.curve,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            boxShadow: showRamadanGlow
-                ? const [BoxShadow(color: AppColors.ramadanGlow, blurRadius: 12, spreadRadius: 2)]
-                : null,
+            boxShadow: const [
+              BoxShadow(color: AppColors.ramadanGlow, blurRadius: 12, spreadRadius: 2),
+            ],
           ),
-          child: Hero(
-            transitionOnUserGestures: true,
-            tag: 'niyet-${niyet.id}',
-            child: Card(
-              child: InkWell(
-                onTap: onTap,
-                borderRadius: BorderRadius.circular(16),
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          _CategoryChip(category: niyet.category),
-                          const Spacer(),
-                          if (niyet.forAllah)
-                            Icon(
-                              Icons.favorite,
-                              size: 16,
-                              color: AppColors.accent.withValues(alpha: 0.7),
-                            ),
-                          if (niyet.outcome != null) ...[
-                            const SizedBox(width: 8),
-                            _OutcomeIndicator(outcome: niyet.outcome!),
-                          ],
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-                      Text(niyet.text, style: Theme.of(context).textTheme.bodyLarge),
-                      if (niyet.reflection != null) ...[
-                        const SizedBox(height: 8),
-                        Text(
-                          niyet.reflection!,
-                          style: Theme.of(
-                            context,
-                          ).textTheme.bodySmall?.copyWith(fontStyle: FontStyle.italic),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
+          child: card,
         );
       },
     );
