@@ -9,13 +9,14 @@ import '../../../niyet/presentation/pages/niyet_detail_page.dart';
 import '../../../niyet/presentation/widgets/niyet_card.dart';
 
 /// Shows the day niyetler dialog with scale/fade animation.
-void showDayNiyetlerSheet({
+/// Returns a Future that completes when the dialog is dismissed.
+Future<void> showDayNiyetlerSheet({
   required BuildContext context,
   required DateTime date,
   required List<Niyet> niyetler,
   void Function(String id)? onDelete,
 }) {
-  showGeneralDialog<void>(
+  return showGeneralDialog<void>(
     context: context,
     barrierDismissible: true,
     barrierLabel: 'Dismiss',
@@ -223,12 +224,16 @@ class _NiyetlerListState extends State<_NiyetlerList>
                     child: NiyetCard(
                       niyet: widget.niyetler[i],
                       onTap: () => _onNiyetTap(widget.niyetler[i]),
+                      // Disable Hero for cards with outcomes (structure mismatch with detail page)
+                      enableHero: widget.niyetler[i].outcome == null,
                     ),
                   )
                 else
                   NiyetCard(
                     niyet: widget.niyetler[i],
                     onTap: () => _onNiyetTap(widget.niyetler[i]),
+                    // Disable Hero for cards with outcomes (structure mismatch with detail page)
+                    enableHero: widget.niyetler[i].outcome == null,
                   ),
               ],
               const SizedBox(height: 16),

@@ -29,25 +29,3 @@ class SlideUpPageTransition<T> extends CustomTransitionPage<T> {
           },
         );
 }
-
-/// Custom page transition with fade only.
-/// Used for detail pages with Hero animations.
-class FadePageTransition<T> extends CustomTransitionPage<T> {
-  FadePageTransition({
-    required super.child,
-    super.key,
-  }) : super(
-          transitionDuration: const Duration(milliseconds: 350),
-          reverseTransitionDuration: const Duration(milliseconds: 300),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(
-              opacity: CurvedAnimation(
-                parent: animation,
-                curve: Curves.easeOut,
-                reverseCurve: Curves.easeIn,
-              ),
-              child: child,
-            );
-          },
-        );
-}

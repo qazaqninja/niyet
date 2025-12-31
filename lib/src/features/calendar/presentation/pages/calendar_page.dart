@@ -181,10 +181,8 @@ class _CalendarViewState extends State<_CalendarView> {
         context.read<NiyetBloc>().add(NiyetDeleted(id: id));
         context.read<CalendarBloc>().add(const CalendarMonthLoaded());
       },
-    );
-
-    // Refresh when sheet closes
-    Future.delayed(const Duration(milliseconds: 100), () {
+    ).then((_) {
+      // Deselect day after dialog closes
       if (context.mounted) {
         context.read<CalendarBloc>().add(const CalendarDayDeselected());
       }
