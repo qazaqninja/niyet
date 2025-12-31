@@ -5,9 +5,27 @@ import '../localization/localization_extension.dart';
 /// Shows a confirmation dialog for deleting a niyet.
 /// Returns true if the user confirms, false otherwise.
 Future<bool> showDeleteNiyetDialog(BuildContext context) async {
-  final result = await showDialog<bool>(
+  final result = await showGeneralDialog<bool>(
     context: context,
-    builder: (context) => AlertDialog(
+    barrierDismissible: true,
+    barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+    barrierColor: Colors.black54,
+    transitionDuration: const Duration(milliseconds: 250),
+    transitionBuilder: (context, animation, secondaryAnimation, child) {
+      final curve = CurvedAnimation(
+        parent: animation,
+        curve: Curves.easeOutBack,
+        reverseCurve: Curves.easeInCubic,
+      );
+      return ScaleTransition(
+        scale: Tween<double>(begin: 0.85, end: 1.0).animate(curve),
+        child: FadeTransition(
+          opacity: animation,
+          child: child,
+        ),
+      );
+    },
+    pageBuilder: (context, animation, secondaryAnimation) => AlertDialog(
       title: Text(context.loc.deleteNiyet),
       content: Text(context.loc.deleteNiyetConfirmation),
       actions: [

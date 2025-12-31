@@ -32,39 +32,42 @@ class CalendarDayCell extends StatelessWidget {
       fontWeight: isToday ? FontWeight.bold : null,
     );
 
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(8),
-      child: Container(
-        decoration: isToday
-            ? BoxDecoration(
-                border: Border.all(
-                  color: AppColors.primary,
-                  width: 1.5,
-                ),
-                borderRadius: BorderRadius.circular(8),
-              )
-            : null,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(date.day.toString(), style: textStyle),
-            const SizedBox(height: 4),
-            // Indicator dot
-            if (hasNiyetler)
-              Container(
-                width: 6,
-                height: 6,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: allReflected
-                      ? AppColors.primary // #6B8E6B (full sage)
-                      : AppColors.primaryLight, // #8FB08F (light sage)
-                ),
-              )
-            else
-              const SizedBox(height: 6), // Placeholder for alignment
-          ],
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(8),
+        child: Container(
+          decoration: isToday
+              ? BoxDecoration(
+                  border: Border.all(
+                    color: AppColors.primary,
+                    width: 1.5,
+                  ),
+                  borderRadius: BorderRadius.circular(8),
+                )
+              : null,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(date.day.toString(), style: textStyle),
+              const SizedBox(height: 4),
+              // Indicator dot
+              if (hasNiyetler)
+                Container(
+                  width: 6,
+                  height: 6,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: allReflected
+                        ? AppColors.primary // #6B8E6B (full sage)
+                        : AppColors.primaryLight, // #8FB08F (light sage)
+                  ),
+                )
+              else
+                const SizedBox(height: 6), // Placeholder for alignment
+            ],
+          ),
         ),
       ),
     );

@@ -26,6 +26,11 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
     CalendarMonthLoaded event,
     Emitter<CalendarState> emit,
   ) async {
+    // Clear cache for current month to force refresh
+    final monthKey = CalendarState._monthKey(state.focusedMonth);
+    final updatedCache = Set<String>.from(state.cachedMonths)..remove(monthKey);
+    emit(state.copyWith(cachedMonths: updatedCache));
+
     await _loadMonth(state.focusedMonth, emit);
   }
 
@@ -56,8 +61,17 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
 
     result.when(
       success: (niyetler) {
-        // Group by date
+        // Clear existing data for this month's days, then add fresh data
         final byDate = <String, List<Niyet>>{...state.niyetlerByDate};
+
+        // Remove all entries for days in this month
+        final daysInMonth = DateTime(month.year, month.month + 1, 0).day;
+        for (var day = 1; day <= daysInMonth; day++) {
+          final key = CalendarState._dateKey(DateTime(month.year, month.month, day));
+          byDate.remove(key);
+        }
+
+        // Add fresh data
         for (final niyet in niyetler) {
           final key = CalendarState._dateKey(niyet.date);
           byDate[key] = [...(byDate[key] ?? []), niyet];
