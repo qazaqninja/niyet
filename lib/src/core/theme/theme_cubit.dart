@@ -41,7 +41,7 @@ class ThemeState with _$ThemeState {
 }
 
 /// Cubit that manages dynamic theme based on time of day and Ramadan
-@injectable
+@lazySingleton
 class ThemeCubit extends Cubit<ThemeState> {
   ThemeCubit(
     this._sunTimesService,

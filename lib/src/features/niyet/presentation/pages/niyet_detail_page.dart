@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/localization/generated/app_localizations.dart';
 import '../../../../core/theme/colors.dart';
 import '../../domain/entities/niyet.dart';
 import '../../domain/entities/niyet_category.dart';
@@ -239,7 +240,7 @@ class _NiyetDetailPageState extends State<NiyetDetailPage> with SingleTickerProv
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Outcome',
+                                        AppLocalizations.of(context)!.outcome,
                                         style: theme.textTheme.labelMedium?.copyWith(
                                           color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                                         ),
@@ -277,7 +278,7 @@ class _NiyetDetailPageState extends State<NiyetDetailPage> with SingleTickerProv
                                     ),
                                     const SizedBox(width: 8),
                                     Text(
-                                      'Reflection',
+                                      AppLocalizations.of(context)!.reflection,
                                       style: theme.textTheme.labelMedium?.copyWith(
                                         color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                                       ),
@@ -306,14 +307,14 @@ class _NiyetDetailPageState extends State<NiyetDetailPage> with SingleTickerProv
                               _buildMetadataRow(
                                 theme: theme,
                                 icon: Icons.calendar_today_outlined,
-                                label: 'Date',
+                                label: AppLocalizations.of(context)!.date,
                                 value: DateFormat.yMMMMd(locale).format(niyet.date),
                               ),
                               const SizedBox(height: 12),
                               _buildMetadataRow(
                                 theme: theme,
                                 icon: Icons.access_time_outlined,
-                                label: 'Created',
+                                label: AppLocalizations.of(context)!.created,
                                 value: DateFormat.jm(locale).format(niyet.createdAt),
                               ),
                             ],

@@ -77,7 +77,12 @@ GoRouter createRouter({String initialLocation = RoutePaths.home}) {
         name: RouteNames.niyetDetail,
         parentNavigatorKey: rootNavigatorKey,
         builder: (context, state) {
-          final niyet = state.extra as Niyet;
+          final niyet = state.extra;
+          if (niyet is! Niyet) {
+            return const Scaffold(
+              body: Center(child: Text('Invalid niyet')),
+            );
+          }
           return NiyetDetailPage(niyet: niyet);
         },
       ),

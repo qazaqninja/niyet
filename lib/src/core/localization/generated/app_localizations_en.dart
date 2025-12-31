@@ -213,4 +213,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get delete => 'Delete';
+
+  @override
+  String get date => 'Date';
+
+  @override
+  String get created => 'Created';
+
+  @override
+  String get outcome => 'Outcome';
+
+  @override
+  String niyetCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count intentions',
+      one: '1 intention',
+      zero: 'No intentions',
+    );
+    return '$_temp0';
+  }
 }

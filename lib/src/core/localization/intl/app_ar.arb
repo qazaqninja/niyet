@@ -66,5 +66,9 @@
   "templateWork2": "إتقان العمل",
   "deleteNiyet": "حذف النية",
   "deleteNiyetConfirmation": "هل تريد حذف هذه النية؟",
-  "delete": "حذف"
+  "delete": "حذف",
+  "date": "التاريخ",
+  "created": "تم الإنشاء",
+  "outcome": "النتيجة",
+  "niyetCount": "{count, plural, =0{لا نوايا} =1{نية واحدة} =2{نيتان} few{{count} نوايا} other{{count} نية}}"
 }

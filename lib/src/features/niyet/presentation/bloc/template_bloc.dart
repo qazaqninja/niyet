@@ -26,24 +26,34 @@ class TemplateBloc extends Bloc<TemplateEvent, TemplateState> {
         super(const TemplateState()) {
     on<TemplateLoadRequested>(_onLoadRequested);
     on<TemplateCreated>(_onCreated);
+    on<_TemplatesUpdated>(_onTemplatesUpdated);
+    on<_TemplatesError>(_onTemplatesError);
 
     // Subscribe to real-time updates (matches NiyetBloc pattern)
     _subscription = _repository.watchTemplates().listen(
-      (templates) {
-        // ignore: invalid_use_of_visible_for_testing_member
-        emit(state.copyWith(
-          status: TemplateStatus.success,
-          userTemplates: templates,
-        ));
-      },
-      onError: (error) {
-        // ignore: invalid_use_of_visible_for_testing_member
-        emit(state.copyWith(
-          status: TemplateStatus.failure,
-          error: error.toString(),
-        ));
-      },
+      (templates) => add(_TemplatesUpdated(templates)),
+      onError: (error) => add(_TemplatesError(error.toString())),
     );
+  }
+
+  void _onTemplatesUpdated(
+    _TemplatesUpdated event,
+    Emitter<TemplateState> emit,
+  ) {
+    emit(state.copyWith(
+      status: TemplateStatus.success,
+      userTemplates: event.templates,
+    ));
+  }
+
+  void _onTemplatesError(
+    _TemplatesError event,
+    Emitter<TemplateState> emit,
+  ) {
+    emit(state.copyWith(
+      status: TemplateStatus.failure,
+      error: event.error,
+    ));
   }
 
   final GetTemplatesUseCase _getTemplates;

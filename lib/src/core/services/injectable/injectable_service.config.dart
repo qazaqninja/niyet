@@ -98,7 +98,7 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i667.NiyetTemplateLocalDataSource>(),
       ),
     );
-    gh.factory<_i598.ThemeCubit>(
+    gh.lazySingleton<_i598.ThemeCubit>(
       () => _i598.ThemeCubit(
         gh<_i276.SunTimesService>(),
         gh<_i328.RamadanService>(),

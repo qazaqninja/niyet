@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/localization/localization_extension.dart';
 import '../../../../core/router/router_paths.dart';
+import '../../../../core/utils/dialogs.dart';
 import '../../../niyet/presentation/bloc/niyet_bloc.dart';
 import '../../../niyet/presentation/widgets/niyet_card.dart';
 
@@ -24,30 +25,6 @@ class _HomePageState extends State<HomePage> {
   bool get _isMorning {
     final hour = DateTime.now().hour;
     return hour >= 5 && hour < 17;
-  }
-
-  Future<bool> _confirmDelete(BuildContext context) async {
-    final result = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(context.loc.deleteNiyet),
-        content: Text(context.loc.deleteNiyetConfirmation),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: Text(context.loc.cancel),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            style: TextButton.styleFrom(
-              foregroundColor: Theme.of(context).colorScheme.error,
-            ),
-            child: Text(context.loc.delete),
-          ),
-        ],
-      ),
-    );
-    return result ?? false;
   }
 
   @override
@@ -174,7 +151,7 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.white,
                               ),
                             ),
-                            confirmDismiss: (_) => _confirmDelete(context),
+                            confirmDismiss: (_) => showDeleteNiyetDialog(context),
                             onDismissed: (_) {
                               context.read<NiyetBloc>().add(
                                     NiyetDeleted(id: niyet.id),

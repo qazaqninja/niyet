@@ -212,4 +212,25 @@ class AppLocalizationsKk extends AppLocalizations {
 
   @override
   String get delete => 'Өшіру';
+
+  @override
+  String get date => 'Күні';
+
+  @override
+  String get created => 'Құрылған';
+
+  @override
+  String get outcome => 'Нәтиже';
+
+  @override
+  String niyetCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ниет',
+      one: '1 ниет',
+      zero: 'Ниет жоқ',
+    );
+    return '$_temp0';
+  }
 }

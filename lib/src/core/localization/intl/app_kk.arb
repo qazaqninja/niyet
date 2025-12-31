@@ -66,5 +66,9 @@
   "noIntentionsForDay": "Бұл күнге ниет жоқ",
   "deleteNiyet": "Ниетті өшіру",
   "deleteNiyetConfirmation": "Бұл ниетті өшіргіңіз келе ме?",
-  "delete": "Өшіру"
+  "delete": "Өшіру",
+  "date": "Күні",
+  "created": "Құрылған",
+  "outcome": "Нәтиже",
+  "niyetCount": "{count, plural, =0{Ниет жоқ} =1{1 ниет} other{{count} ниет}}"
 }

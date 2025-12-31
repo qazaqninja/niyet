@@ -211,4 +211,27 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get delete => 'حذف';
+
+  @override
+  String get date => 'التاريخ';
+
+  @override
+  String get created => 'تم الإنشاء';
+
+  @override
+  String get outcome => 'النتيجة';
+
+  @override
+  String niyetCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count نية',
+      few: '$count نوايا',
+      two: 'نيتان',
+      one: 'نية واحدة',
+      zero: 'لا نوايا',
+    );
+    return '$_temp0';
+  }
 }

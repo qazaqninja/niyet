@@ -501,6 +501,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete'**
   String get delete;
+
+  /// No description provided for @date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get date;
+
+  /// No description provided for @created.
+  ///
+  /// In en, this message translates to:
+  /// **'Created'**
+  String get created;
+
+  /// No description provided for @outcome.
+  ///
+  /// In en, this message translates to:
+  /// **'Outcome'**
+  String get outcome;
+
+  /// No description provided for @niyetCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No intentions} =1{1 intention} other{{count} intentions}}'**
+  String niyetCount(int count);
 }
 
 class _AppLocalizationsDelegate

@@ -66,5 +66,16 @@
   "templateWork2": "Do work excellently",
   "deleteNiyet": "Delete intention",
   "deleteNiyetConfirmation": "Are you sure you want to delete this intention?",
-  "delete": "Delete"
+  "delete": "Delete",
+  "date": "Date",
+  "created": "Created",
+  "outcome": "Outcome",
+  "niyetCount": "{count, plural, =0{No intentions} =1{1 intention} other{{count} intentions}}",
+  "@niyetCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }
